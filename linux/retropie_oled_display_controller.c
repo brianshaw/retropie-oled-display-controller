@@ -19,6 +19,60 @@ int iOLEDType0 = OLED_128x64; // Change this for your specific display
 int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
 
+#include <sys/inotify.h>
+int fd;
+int wd;
+char* fileToWatch = argv[1];
+// char* fileToWatch = "test.txt";
+
+fd = inotify_init();
+if (fd == -1) {
+  perror("inotify_init");
+  exit(EXIT_FAILURE);
+}
+
+wd = inotify_add_watch(fd, fileToWatch, IN_MODIFY);
+if (wd == -1) {
+  perror("inotify_add_watch");
+  exit(EXIT_FAILURE);
+}
+
+while (1) {
+  char buffer[EVENT_BUF_LEN];
+  int length = read(fd, buffer, EVENT_BUF_LEN);
+  if (length == -1) {
+    perror("read");
+    exit(EXIT_FAILURE);
+  }
+
+  int i = 0;
+  while (i < length) {
+    struct inotify_event* event = (struct inotify_event*)&buffer[i];
+    if (event->mask & IN_MODIFY) {
+      updateDisplay();
+    }
+    i += EVENT_SIZE + event->len;
+  }
+}
+
+inotify_rm_watch(fd, wd);
+
+void updateDisplay() {
+  FILE *file = fopen(fileToWatch, "r");
+  if (file == NULL) {
+    perror("fopen");
+    exit(EXIT_FAILURE);
+  }
+
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    // Process each line of the file
+    // ...
+    oledWriteString(&ssoled[0], 0,0,6,line, FONT_SMALL,0,1);
+  }
+
+  fclose(file);
+}
 // For hardware I2C on the RPI, the clock rate is fixed and set in the
 // /boot/config.txt file, so we pass 0 for the bus speed
 		// i=oledInit(&ssoled[0], iOLEDType0, iOLEDAddr, bFlip, bInvert, bWire, 1, -1, -1, 0); // initialize 128x64 oled on I2C channel 1
@@ -33,7 +87,7 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 		oledWriteString(&ssoled[0], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
 		oledWriteString(&ssoled[0], 0,3,2,"BIG!",FONT_LARGE,0,1);
 		oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
-		oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
+		// oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
 		for (i=0; i<64; i++)
 		{
 			oledSetPixel(&ssoled[0], i, 16+i, 1, 1);
@@ -47,10 +101,13 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 		getchar();
 		oledPower(&ssoled[0], 0); // turn off both displays
 		oledPower(&ssoled[1], 0);
+    close(fd);
 	}
 	else
 	{
 		printf("Unable to initialize I2C bus 0-2, please check your connections and verify the device address by typing 'i2cdetect -y <channel>\n");
 	}
+
+  
    return 0;
 } /* main() */
