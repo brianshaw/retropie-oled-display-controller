@@ -110,20 +110,20 @@ int bFlip = 0, bInvert = 0, bWire = 1;
    return 0;
 } /* main() */
 
-void updateDisplay() {
-  FILE *file = fopen(fileToWatch, "r");
-  if (file == NULL) {
-    perror("fopen");
-    exit(EXIT_FAILURE);
-  }
+// void updateDisplay() {
+//   FILE *file = fopen(fileToWatch, "r");
+//   if (file == NULL) {
+//     perror("fopen");
+//     exit(EXIT_FAILURE);
+//   }
 
-  char line[256];
-  while (fgets(line, sizeof(line), file)) {
-    // Process each line of the file
-    // ...
-    // oledWriteString(&ssoled[0], 0,0,6,line, FONT_SMALL,0,1);
-    printf("%s", line);
-  }
+//   char line[256];
+//   while (fgets(line, sizeof(line), file)) {
+//     // Process each line of the file
+//     // ...
+//     // oledWriteString(&ssoled[0], 0,0,6,line, FONT_SMALL,0,1);
+//     printf("%s", line);
+//   }
 
-  fclose(file);
-}
+//   fclose(file);
+// }
