@@ -14,6 +14,7 @@
 #include <json.h> // https://github.com/katie-snow/Ultimarc-linux/blob/master/src/libs/pacdrive.c
 #include <stdint.h>
 #include <unistd.h>
+#include <sys/inotify.h>
 #include "ss_oled.h"
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
@@ -28,10 +29,21 @@ typedef struct args
 int loadGameConfig();
 int initDisplays();
 int turnOffDisplays();
+void watchDisplayUpdate();
 
 int retVal;
 json_object *bcfg = NULL;
 json_object* tmp = NULL;
+
+#define EVENT_SIZE (sizeof(struct inotify_event)) // Add this line to declare the missing variable
+#define BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
+
+char* folderToWatch = "displayTexts";
+int length, ifile = 0;
+int fd;
+int wd;
+char buffer[BUF_LEN];
+
 
 int
 main (int argc, char **argv)
@@ -212,4 +224,43 @@ turnOffDisplays()
   oledPower(&ssoled[0], 0); // turn off both displays
   // oledPower(&ssoled[1], 0);
   return 0;
+}
+
+void watchDisplayUpdate() {
+    printf("Watching \n");
+    fd = inotify_init();
+
+    if (fd < 0) {
+        perror("inotify_init");
+    }
+
+    // wd = inotify_add_watch(fd, ".",
+    wd = inotify_add_watch(fd, folderToWatch,
+        IN_MODIFY | IN_CREATE | IN_DELETE);
+    length = read(fd, buffer, BUF_LEN);
+
+    if (length < 0) {
+        perror("read");
+    }
+
+    while (ifile < length) {
+        struct inotify_event *event =
+            (struct inotify_event *) &buffer[ifile];
+        if (event->len) {
+            if (event->mask & IN_CREATE) {
+                printf("The file %s was created.\n", event->name);
+            } else if (event->mask & IN_DELETE) {
+                printf("The file %s was deleted.\n", event->name);
+            } else if (event->mask & IN_MODIFY) {
+                printf("The file %s was modified.\n", event->name);
+            }
+            initDisplays();
+            loadGameConfig(argv[1]);
+            watchDisplayUpdate();
+        }
+        ifile += EVENT_SIZE + event->len;
+    }
+
+    (void) inotify_rm_watch(fd, wd);
+    (void) close(fd);
 }
