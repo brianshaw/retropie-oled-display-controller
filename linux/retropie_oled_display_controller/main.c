@@ -21,11 +21,13 @@ typedef struct args
 
 int loadGameConfig();
 
+int retVal;
+
 int
 main (int argc, char **argv)
 {
   int idx;
-  int retVal;
+  
 
   // ulboard board;
 
