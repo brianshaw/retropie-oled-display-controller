@@ -22,6 +22,8 @@ typedef struct args
 int loadGameConfig();
 
 int retVal;
+json_object *bcfg = NULL;
+json_object* tmp = NULL;
 
 int
 main (int argc, char **argv)
@@ -128,7 +130,7 @@ ulValidateConfig (json_object* bcfg)
 int
 ulValidateConfigFileStr (const char* file)
 {
-  json_object *bcfg = json_object_from_file (file);
+  bcfg = json_object_from_file (file);
 
   return ulValidateConfig (bcfg);
 }
@@ -141,6 +143,9 @@ loadGameConfig(const char* gameconfig)
 
   if (retVal == 0)
   {
+    if (json_object_object_get_ex(bcfg, "LED intensity all", &tmp)) {
+      printf ("Game Found - %s\n", tmp);
+    }
     // retVal = ulWriteToBoardFileStr(argv[idx], &board);
   }
 
