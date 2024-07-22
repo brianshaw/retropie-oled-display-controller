@@ -174,9 +174,9 @@ loadGameConfig()
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
       initDisplays();
       oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
-      printf("Press ENTER to quit\n");
-      getchar();
-      turnOffDisplays();
+      // printf("Press ENTER to quit\n");
+      // getchar();
+      // turnOffDisplays();
     } else {
       printf ("Game Not Found\n");
     }
