@@ -17,6 +17,7 @@
 #include <sys/inotify.h>
 #include "ss_oled.h"
 #include <signal.h>
+#include <time.h>
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
@@ -33,6 +34,7 @@ int turnOffDisplays();
 void watchDisplayUpdate();
 void bye();
 void signalHandler(int sig);
+void delay(int number_of_seconds);
 
 int retVal;
 json_object *bcfg = NULL;
@@ -121,7 +123,7 @@ main (int argc, char **argv)
   //   }
   // }
 
-  atexit(bye);
+  // atexit(bye);
 
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
@@ -293,11 +295,27 @@ void watchDisplayUpdate() {
     (void) close(fd);
 }
 
+
+
+void delay(int number_of_seconds)
+{
+    // Converting time into milli_seconds
+    int milli_seconds = 1000 * number_of_seconds;
+
+    // Storing start time
+    clock_t start_time = clock();
+
+    // looping till required time is not achieved
+    while (clock() < start_time + milli_seconds)
+        ;
+}
+
 void
 bye ()
 {
   printf ("Goodbye!\n");
   if (turnOffDisplays() == 0) {
+    delay(1);
     printf ("Displays turned off\n");
   }
 }
@@ -305,5 +323,6 @@ bye ()
 void signalHandler(int sig) {
   printf("Caught signal %d\n", sig);
   // turnOffDisplays();
+  bye();
   exit(0);
 }
