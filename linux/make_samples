@@ -25,4 +25,4 @@ retropie_oled_display_controller: retropie_oled_display_controller.o libss_oled.
 	$(CC) retropie_oled_display_controller.o $(LIBS) -o retropie_oled_display_controller
 
 clean:
-	rm *.o sample multi speed
+	rm *.o sample multi speed retropie_oled_display_controller
