@@ -22,8 +22,8 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 
 int fd;
 int wd;
-char* fileToWatch = argv[1];
-// char* fileToWatch = "test.txt";
+// char* fileToWatch = argv[1];
+char* fileToWatch = "test.txt";
 
 fd = inotify_init();
 if (fd == -1) {
