@@ -17,6 +17,7 @@ unsigned char ucBackBuf[1024];
 char* folderToWatch = "displayTexts";
 
 void updateDisplay(); // Add this line to provide a function prototype
+void watchDisplayUpdate(); // Add this line to provide a function prototype
 
 int main(int argc, char *argv[])
 {
@@ -29,45 +30,7 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 
 
 
-    int length, ifile = 0;
-    int fd;
-    int wd;
-    char buffer[BUF_LEN];
-
-    printf("Watching \n");
-    fd = inotify_init();
-
-    if (fd < 0) {
-        perror("inotify_init");
-    }
-
-    // wd = inotify_add_watch(fd, ".",
-    wd = inotify_add_watch(fd, folderToWatch,
-        IN_MODIFY | IN_CREATE | IN_DELETE);
-    length = read(fd, buffer, BUF_LEN);
-
-    if (length < 0) {
-        perror("read");
-    }
-
-    while (ifile < length) {
-        struct inotify_event *event =
-            (struct inotify_event *) &buffer[ifile];
-        if (event->len) {
-            if (event->mask & IN_CREATE) {
-                printf("The file %s was created.\n", event->name);
-            } else if (event->mask & IN_DELETE) {
-                printf("The file %s was deleted.\n", event->name);
-            } else if (event->mask & IN_MODIFY) {
-                printf("The file %s was modified.\n", event->name);
-            }
-        }
-        ifile += EVENT_SIZE + event->len;
-    }
-
-    
-    // (void) inotify_rm_watch(fd, wd);
-    // (void) close(fd);
+    watchDisplayUpdate()
 
 
 
@@ -132,3 +95,44 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 
 //   fclose(file);
 // }
+
+void watchDisplayUpdate() {
+  int length, ifile = 0;
+    int fd;
+    int wd;
+    char buffer[BUF_LEN];
+
+    printf("Watching \n");
+    fd = inotify_init();
+
+    if (fd < 0) {
+        perror("inotify_init");
+    }
+
+    // wd = inotify_add_watch(fd, ".",
+    wd = inotify_add_watch(fd, folderToWatch,
+        IN_MODIFY | IN_CREATE | IN_DELETE);
+    length = read(fd, buffer, BUF_LEN);
+
+    if (length < 0) {
+        perror("read");
+    }
+
+    while (ifile < length) {
+        struct inotify_event *event =
+            (struct inotify_event *) &buffer[ifile];
+        if (event->len) {
+            if (event->mask & IN_CREATE) {
+                printf("The file %s was created.\n", event->name);
+            } else if (event->mask & IN_DELETE) {
+                printf("The file %s was deleted.\n", event->name);
+            } else if (event->mask & IN_MODIFY) {
+                printf("The file %s was modified.\n", event->name);
+            }
+        }
+        ifile += EVENT_SIZE + event->len;
+    }
+
+    (void) inotify_rm_watch(fd, wd);
+    (void) close(fd);
+}
