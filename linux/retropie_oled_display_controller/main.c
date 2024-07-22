@@ -103,6 +103,7 @@ main (int argc, char **argv)
 
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
+  watchDisplayUpdate();
   
 
   exit: return retVal;
