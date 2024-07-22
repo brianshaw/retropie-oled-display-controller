@@ -34,6 +34,7 @@ int bFlip = 0, bInvert = 0, bWire = 1;
     int wd;
     char buffer[BUF_LEN];
 
+    printf("Watching \n");
     fd = inotify_init();
 
     if (fd < 0) {
@@ -49,7 +50,6 @@ int bFlip = 0, bInvert = 0, bWire = 1;
         perror("read");
     }
 
-    printf("Watching \n");
     while (ifile < length) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
