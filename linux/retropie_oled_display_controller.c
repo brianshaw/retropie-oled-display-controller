@@ -60,7 +60,7 @@ while (1) {
     i += EVENT_SIZE + event->len;
   }
 }
-
+printf("start");
 inotify_rm_watch(fd, wd);
 close(fd);
 
