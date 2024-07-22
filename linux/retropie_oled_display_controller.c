@@ -20,7 +20,7 @@ void updateDisplay(); // Add this line to provide a function prototype
 
 int main(int argc, char *argv[])
 {
-  printf(stdout, "main");
+  fprintf(stdout, "main");
 int i;
 int iOLEDAddr = -1; // typical address; it can also be 0x3d
 int iOLEDType0 = OLED_128x64; // Change this for your specific display
@@ -61,7 +61,7 @@ while (1) {
     i += EVENT_SIZE + event->len;
   }
 }
-printf(stdout, "start");
+fprintf(stdout, "start");
 inotify_rm_watch(fd, wd);
 close(fd);
 
