@@ -181,7 +181,7 @@ initDisplays()
     printf("Successfully opened I2C bus 1\n");
     oledSetBackBuffer(&ssoled[0], ucBackBuf);
     oledFill(&ssoled[0], 0,1); // fill with black
-    oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
+    // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
     oledWriteString(&ssoled[0], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
     oledWriteString(&ssoled[0], 0,3,2,"BIG!",FONT_LARGE,0,1);
     oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
