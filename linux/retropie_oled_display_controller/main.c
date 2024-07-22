@@ -101,6 +101,8 @@ main (int argc, char **argv)
   //   }
   // }
 
+  atexit( turnOffDisplays );
+
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
   watchDisplayUpdate();
