@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "ss_oled.h"
+#include <sys/inotify.h>
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
@@ -19,7 +20,6 @@ int iOLEDType0 = OLED_128x64; // Change this for your specific display
 int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
 
-#include <sys/inotify.h>
 int fd;
 int wd;
 char* fileToWatch = argv[1];
@@ -57,22 +57,7 @@ while (1) {
 
 inotify_rm_watch(fd, wd);
 
-void updateDisplay() {
-  FILE *file = fopen(fileToWatch, "r");
-  if (file == NULL) {
-    perror("fopen");
-    exit(EXIT_FAILURE);
-  }
 
-  char line[256];
-  while (fgets(line, sizeof(line), file)) {
-    // Process each line of the file
-    // ...
-    oledWriteString(&ssoled[0], 0,0,6,line, FONT_SMALL,0,1);
-  }
-
-  fclose(file);
-}
 // For hardware I2C on the RPI, the clock rate is fixed and set in the
 // /boot/config.txt file, so we pass 0 for the bus speed
 		// i=oledInit(&ssoled[0], iOLEDType0, iOLEDAddr, bFlip, bInvert, bWire, 1, -1, -1, 0); // initialize 128x64 oled on I2C channel 1
@@ -111,3 +96,20 @@ void updateDisplay() {
   
    return 0;
 } /* main() */
+
+void updateDisplay() {
+  FILE *file = fopen(fileToWatch, "r");
+  if (file == NULL) {
+    perror("fopen");
+    exit(EXIT_FAILURE);
+  }
+
+  char line[256];
+  while (fgets(line, sizeof(line), file)) {
+    // Process each line of the file
+    // ...
+    oledWriteString(&ssoled[0], 0,0,6,line, FONT_SMALL,0,1);
+  }
+
+  fclose(file);
+}
