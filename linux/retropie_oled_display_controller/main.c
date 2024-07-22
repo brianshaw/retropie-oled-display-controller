@@ -24,17 +24,6 @@ int loadGameConfig();
 int retVal;
 json_object *bcfg = NULL;
 json_object* tmp = NULL;
-struct {
-		int flag;
-		const char *flag_str;
-	} json_flags[] = {
-		{ JSON_C_TO_STRING_PLAIN, "JSON_C_TO_STRING_PLAIN" },
-		{ JSON_C_TO_STRING_SPACED, "JSON_C_TO_STRING_SPACED" },
-		{ JSON_C_TO_STRING_PRETTY, "JSON_C_TO_STRING_PRETTY" },
-		{ JSON_C_TO_STRING_NOZERO, "JSON_C_TO_STRING_NOZERO" },
-		{ JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY, "JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY" },
-		{ -1, NULL }
-  }
 
 int
 main (int argc, char **argv)
@@ -142,7 +131,7 @@ int
 ulValidateConfigFileStr (const char* file)
 {
   bcfg = json_object_from_file (file);
-  printf("%s\n---\n", json_object_to_json_string_ext(bcfg, json_flags[i].flag));
+  printf("%s\n---\n", json_object_to_json_string_ext(bcfg, 'JSON_C_TO_STRING_PRETTY'));
 
   return ulValidateConfig (bcfg);
 }
