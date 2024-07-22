@@ -141,6 +141,7 @@ loadGameConfig(const char* gameconfig)
   printf ("Loading %s...\n", gameconfig);
   retVal = ulValidateConfigFileStr (gameconfig);
 
+  printf ("retVal = %d\n", retVal);
   if (retVal == 0)
   {
     if (json_object_object_get_ex(bcfg, "LED intensity all", &tmp)) {
