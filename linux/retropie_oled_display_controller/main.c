@@ -155,6 +155,7 @@ loadGameConfig(const char* gameconfig)
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
       initDisplays();
+      oledWriteString(&ssoled[0], 0,0,6, json_object_to_json_string(tmp), FONT_SMALL,0,1);
     } else {
       printf ("Game Not Found\n");
     }
