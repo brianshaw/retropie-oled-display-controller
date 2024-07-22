@@ -27,43 +27,43 @@ int iOLEDType0 = OLED_128x64; // Change this for your specific display
 int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
 
-int fd;
-int wd;
-// char* fileToWatch = argv[1];
+// int fd;
+// int wd;
+// // char* fileToWatch = argv[1];
 
-fd = inotify_init();
-if (fd == -1) {
-  perror("inotify_init");
-  exit(EXIT_FAILURE);
-}
+// fd = inotify_init();
+// if (fd == -1) {
+//   perror("inotify_init");
+//   exit(EXIT_FAILURE);
+// }
 
-wd = inotify_add_watch(fd, fileToWatch, IN_MODIFY);
-if (wd == -1) {
-  perror("inotify_add_watch");
-  exit(EXIT_FAILURE);
-}
+// wd = inotify_add_watch(fd, fileToWatch, IN_MODIFY);
+// if (wd == -1) {
+//   perror("inotify_add_watch");
+//   exit(EXIT_FAILURE);
+// }
 
-while (1) {
-  char buffer[EVENT_BUF_LEN];
-  int length = read(fd, buffer, EVENT_BUF_LEN);
-  if (length == -1) {
-    perror("read");
-    exit(EXIT_FAILURE);
-  }
+// while (1) {
+//   char buffer[EVENT_BUF_LEN];
+//   int length = read(fd, buffer, EVENT_BUF_LEN);
+//   if (length == -1) {
+//     perror("read");
+//     exit(EXIT_FAILURE);
+//   }
 
-  int i = 0;
-  while (i < length) {
-    struct inotify_event* event = (struct inotify_event*)&buffer[i];
-    if (event->mask & IN_MODIFY) {
-      updateDisplay();
-    }
-    printf("test");
-    i += EVENT_SIZE + event->len;
-  }
-}
-fprintf(stdout, "start");
-inotify_rm_watch(fd, wd);
-close(fd);
+//   int i = 0;
+//   while (i < length) {
+//     struct inotify_event* event = (struct inotify_event*)&buffer[i];
+//     if (event->mask & IN_MODIFY) {
+//       updateDisplay();
+//     }
+//     printf("test");
+//     i += EVENT_SIZE + event->len;
+//   }
+// }
+// fprintf(stdout, "start");
+// inotify_rm_watch(fd, wd);
+// close(fd);
 
 // For hardware I2C on the RPI, the clock rate is fixed and set in the
 // /boot/config.txt file, so we pass 0 for the bus speed
