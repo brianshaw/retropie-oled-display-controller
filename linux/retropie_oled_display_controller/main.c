@@ -27,6 +27,7 @@ typedef struct args
 
 int loadGameConfig();
 int initDisplays();
+int turnOffDisplays();
 
 int retVal;
 json_object *bcfg = NULL;
