@@ -56,6 +56,7 @@ while (1) {
     if (event->mask & IN_MODIFY) {
       updateDisplay();
     }
+    printf("test");
     i += EVENT_SIZE + event->len;
   }
 }
