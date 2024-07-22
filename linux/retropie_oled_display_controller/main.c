@@ -252,6 +252,9 @@ initDisplays()
 int
 turnOffDisplays()
 {
+  if (!ssoled[0]) {
+    initDisplays();
+  }
   oledPower(&ssoled[0], 0); // turn off both displays
   // oledPower(&ssoled[1], 0);
   return 0;
