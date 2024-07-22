@@ -1,0 +1,10 @@
+[Unit]
+Description=Retropie Oled Display Contoller
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/pi/retropie-oled-display-controller/linux/retropie_oled_display_controller ../../../retropie-controller-display-and-lights/pacdrive.json
+
+[Install]
+WantedBy=multi-user.target
