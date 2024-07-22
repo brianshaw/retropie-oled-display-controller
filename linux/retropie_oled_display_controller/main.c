@@ -19,6 +19,8 @@ typedef struct args
   int multi;
 } args;
 
+void loadGameConfig();
+
 int
 main (int argc, char **argv)
 {
@@ -79,7 +81,7 @@ main (int argc, char **argv)
 }
 
 int
-ulValidateConfig (json_object* bcfg, ulboard* ulcfg)
+ulValidateConfig (json_object* bcfg)
 {
   int retCode = 0;
 
@@ -122,11 +124,11 @@ ulValidateConfig (json_object* bcfg, ulboard* ulcfg)
 }
 
 int
-ulValidateConfigFileStr (const char* file, ulboard* board)
+ulValidateConfigFileStr (const char* file)
 {
   json_object *bcfg = json_object_from_file (file);
 
-  return ulValidateConfig (bcfg, board);
+  return ulValidateConfig (bcfg);
 }
 
 int
