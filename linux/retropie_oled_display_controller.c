@@ -9,12 +9,12 @@
 #include "ss_oled.h"
 #include <sys/inotify.h>
 
-#define EVENT_BUF_LEN 1024 // Add this line to declare the missing variable
 #define EVENT_SIZE (sizeof(struct inotify_event)) // Add this line to declare the missing variable
+#define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
-char* fileToWatch = "test.txt";
+char* folderToWatch = "displayTexts";
 
 void updateDisplay(); // Add this line to provide a function prototype
 
@@ -27,43 +27,47 @@ int iOLEDType0 = OLED_128x64; // Change this for your specific display
 int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
 
-// int fd;
-// int wd;
-// // char* fileToWatch = argv[1];
 
-// fd = inotify_init();
-// if (fd == -1) {
-//   perror("inotify_init");
-//   exit(EXIT_FAILURE);
-// }
 
-// wd = inotify_add_watch(fd, fileToWatch, IN_MODIFY);
-// if (wd == -1) {
-//   perror("inotify_add_watch");
-//   exit(EXIT_FAILURE);
-// }
+    int length, ifile = 0;
+    int fd;
+    int wd;
+    char buffer[BUF_LEN];
 
-// while (1) {
-//   char buffer[EVENT_BUF_LEN];
-//   int length = read(fd, buffer, EVENT_BUF_LEN);
-//   if (length == -1) {
-//     perror("read");
-//     exit(EXIT_FAILURE);
-//   }
+    fd = inotify_init();
 
-//   int i = 0;
-//   while (i < length) {
-//     struct inotify_event* event = (struct inotify_event*)&buffer[i];
-//     if (event->mask & IN_MODIFY) {
-//       updateDisplay();
-//     }
-//     printf("test");
-//     i += EVENT_SIZE + event->len;
-//   }
-// }
-// fprintf(stdout, "start");
-// inotify_rm_watch(fd, wd);
-// close(fd);
+    if (fd < 0) {
+        perror("inotify_init");
+    }
+
+    // wd = inotify_add_watch(fd, ".",
+    wd = inotify_add_watch(fd, folderToWatch,
+        IN_MODIFY | IN_CREATE | IN_DELETE);
+    length = read(fd, buffer, BUF_LEN);
+
+    if (length < 0) {
+        perror("read");
+    }
+
+    while (ifile < length) {
+        struct inotify_event *event =
+            (struct inotify_event *) &buffer[ifile];
+        if (event->len) {
+            if (event->mask & IN_CREATE) {
+                printf("The file %s was created.\n", event->name);
+            } else if (event->mask & IN_DELETE) {
+                printf("The file %s was deleted.\n", event->name);
+            } else if (event->mask & IN_MODIFY) {
+                printf("The file %s was modified.\n", event->name);
+            }
+        }
+        ifile += EVENT_SIZE + event->len;
+    }
+
+    (void) inotify_rm_watch(fd, wd);
+    (void) close(fd);
+
+
 
 // For hardware I2C on the RPI, the clock rate is fixed and set in the
 // /boot/config.txt file, so we pass 0 for the bus speed
