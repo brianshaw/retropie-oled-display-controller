@@ -30,6 +30,7 @@ int loadGameConfig();
 int initDisplays();
 int turnOffDisplays();
 void watchDisplayUpdate();
+void bye();
 
 int retVal;
 json_object *bcfg = NULL;
@@ -101,7 +102,7 @@ main (int argc, char **argv)
   //   }
   // }
 
-  atexit((void (*)(void))turnOffDisplays);
+  atexit(bye);
 
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
@@ -271,4 +272,11 @@ void watchDisplayUpdate() {
 
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
+}
+
+void
+bye ()
+{
+  printf ("Goodbye!\n");
+  turnOffDisplays();
 }
