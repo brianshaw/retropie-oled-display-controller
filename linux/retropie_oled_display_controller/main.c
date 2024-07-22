@@ -297,7 +297,9 @@ void
 bye ()
 {
   printf ("Goodbye!\n");
-  turnOffDisplays();
+  if (turnOffDisplays()) {
+    printf ("Displays turned off\n");
+  }
 }
 
 void signalHandler(int sig) {
