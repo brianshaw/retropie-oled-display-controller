@@ -101,7 +101,7 @@ main (int argc, char **argv)
   //   }
   // }
 
-  atexit( turnOffDisplays );
+  atexit((void (*)(void))turnOffDisplays);
 
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
