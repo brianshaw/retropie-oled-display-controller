@@ -34,6 +34,7 @@ void watchDisplayUpdate();
 int retVal;
 json_object *bcfg = NULL;
 json_object* tmp = NULL;
+char* pathToPacDriveJsonGameConfig;
 
 #define EVENT_SIZE (sizeof(struct inotify_event)) // Add this line to declare the missing variable
 #define BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
@@ -99,7 +100,9 @@ main (int argc, char **argv)
   //   }
   // }
 
-  loadGameConfig(argv[1]);
+  pathToPacDriveJsonGameConfig = argv[1];
+  loadGameConfig();
+  
 
   exit: return retVal;
 }
@@ -156,11 +159,12 @@ ulValidateConfigFileStr (const char* file)
   return ulValidateConfig (bcfg);
 }
 
+// loadGameConfig(const char* gameconfig)
 int
-loadGameConfig(const char* gameconfig)
+loadGameConfig()
 {
-  printf ("Loading %s...\n", gameconfig);
-  retVal = ulValidateConfigFileStr (gameconfig);
+  printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
+  retVal = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
 
   printf ("retVal = %d\n", retVal);
   if (retVal == 0)
@@ -255,7 +259,7 @@ void watchDisplayUpdate() {
                 printf("The file %s was modified.\n", event->name);
             }
             initDisplays();
-            loadGameConfig(argv[1]);
+            loadGameConfig();
             watchDisplayUpdate();
         }
         ifile += EVENT_SIZE + event->len;
