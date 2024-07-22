@@ -30,7 +30,7 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 
 
 
-    watchDisplayUpdate()
+    watchDisplayUpdate();
 
 
 
