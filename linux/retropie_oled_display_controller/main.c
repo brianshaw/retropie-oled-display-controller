@@ -39,7 +39,8 @@ char* pathToPacDriveJsonGameConfig;
 #define EVENT_SIZE (sizeof(struct inotify_event)) // Add this line to declare the missing variable
 #define BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
 
-char* folderToWatch = "displayTexts";
+char* folderToWatch = "/home/pi/retropie-controller-display-and-lights";
+// char* folderToWatch = "displayTexts";
 int length, ifile = 0;
 int fd;
 int wd;
