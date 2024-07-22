@@ -29,7 +29,17 @@ int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
 
 
+    int length, ifile = 0;
+    int fd;
+    int wd;
+    char buffer[BUF_LEN];
 
+    printf("Watching \n");
+    fd = inotify_init();
+
+    if (fd < 0) {
+        perror("inotify_init");
+    }
     watchDisplayUpdate();
 
 
@@ -97,17 +107,6 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 // }
 
 void watchDisplayUpdate() {
-  int length, ifile = 0;
-    int fd;
-    int wd;
-    char buffer[BUF_LEN];
-
-    printf("Watching \n");
-    fd = inotify_init();
-
-    if (fd < 0) {
-        perror("inotify_init");
-    }
 
     // wd = inotify_add_watch(fd, ".",
     wd = inotify_add_watch(fd, folderToWatch,
