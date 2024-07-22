@@ -51,6 +51,7 @@ char buffer[BUF_LEN];
 int
 main (int argc, char **argv)
 {
+  signal(SIGTERM, signalHandler);
   int idx;
   
 
@@ -279,4 +280,10 @@ bye ()
 {
   printf ("Goodbye!\n");
   turnOffDisplays();
+}
+
+void signalHandler(int sig) {
+  printf("Caught signal %d\n", sig);
+  // turnOffDisplays();
+  exit(0);
 }
