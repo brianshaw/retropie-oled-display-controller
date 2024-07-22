@@ -85,7 +85,7 @@ ulValidateConfig (json_object* bcfg)
 {
   int retCode = 0;
 
-  if (bcfg && ulcfg)
+  if (bcfg)
   {
     // retCode = ulGetProdAndVersion (bcfg, ulcfg);
     
@@ -132,10 +132,10 @@ ulValidateConfigFileStr (const char* file)
 }
 
 int
-loadGameConfig()
+loadGameConfig(gameconfig)
 {
-  printf ("Loading %s...\n", argv[1]);
-  retVal = ulValidateConfigFileStr (argv[1], &board);
+  printf ("Loading %s...\n", gameconfig);
+  retVal = ulValidateConfigFileStr (gameconfig);
 
   if (retVal == 0)
   {
