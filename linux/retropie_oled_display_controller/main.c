@@ -204,6 +204,7 @@ loadGameConfig()
       // turnOffDisplays();
     } else {
       printf ("Game Not Found\n");
+      turnOffDisplays();
     }
     // retVal = ulWriteToBoardFileStr(argv[idx], &board);
   }
@@ -315,7 +316,7 @@ bye ()
 {
   printf ("Goodbye!\n");
   if (turnOffDisplays() == 0) {
-    delay(1);
+    // delay(1);
     printf ("Displays turned off\n");
   }
 }
