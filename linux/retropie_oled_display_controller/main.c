@@ -297,7 +297,7 @@ void
 bye ()
 {
   printf ("Goodbye!\n");
-  if (turnOffDisplays()) {
+  if (turnOffDisplays() == 0) {
     printf ("Displays turned off\n");
   }
 }
