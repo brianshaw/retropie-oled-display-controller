@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <sys/inotify.h>
 #include "ss_oled.h"
+#include <signal.h>
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
