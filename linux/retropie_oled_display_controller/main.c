@@ -34,6 +34,7 @@ struct {
 		{ JSON_C_TO_STRING_NOZERO, "JSON_C_TO_STRING_NOZERO" },
 		{ JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY, "JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY" },
 		{ -1, NULL }
+  }
 
 int
 main (int argc, char **argv)
