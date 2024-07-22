@@ -77,7 +77,7 @@ main (int argc, char **argv)
   //   }
   // }
 
-  loadGameConfig(argv);
+  loadGameConfig(argv[1]);
 
   exit: return retVal;
 }
