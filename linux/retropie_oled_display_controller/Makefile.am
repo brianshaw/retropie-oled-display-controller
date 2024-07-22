@@ -1,6 +1,6 @@
 
 CFLAGS=-c -Wall -O2 -D_LINUX_
-LIBS = -lss_oled -lpigpio -lBitBang_I2C -lm -lpthread -ljson
+LIBS = -lss_oled -lpigpio -lBitBang_I2C -lm -lpthread -ljson-c
 CFLAGS += $(shell pkg-config --cflags json-c)
 LDFLAGS += $(shell pkg-config --libs json-c)
 
