@@ -21,5 +21,8 @@ sample: sample.o libss_oled.a
 sample.o: sample.c
 	$(CC) $(CFLAGS) sample.c
 
+retropie_oled_display_controller.o: retropie_oled_display_controller.c
+	$(CC) $(CFLAGS) retropie_oled_display_controller.c
+
 clean:
 	rm *.o sample multi speed
