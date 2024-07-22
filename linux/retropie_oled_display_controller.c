@@ -14,7 +14,13 @@
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
+
 char* folderToWatch = "displayTexts";
+int length, ifile = 0;
+int fd;
+int wd;
+char buffer[BUF_LEN];
+
 
 void updateDisplay(); // Add this line to provide a function prototype
 void watchDisplayUpdate(); // Add this line to provide a function prototype
@@ -28,9 +34,7 @@ int iOLEDType0 = OLED_128x64; // Change this for your specific display
 int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
 
-int length, ifile = 0;
-    int fd;
-    int wd;
+
 
     watchDisplayUpdate();
 
@@ -99,8 +103,8 @@ int length, ifile = 0;
 // }
 
 void watchDisplayUpdate() {
-  
-    char buffer[BUF_LEN];
+
+    
 
     printf("Watching \n");
     fd = inotify_init();
