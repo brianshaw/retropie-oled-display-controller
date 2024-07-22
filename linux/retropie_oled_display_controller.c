@@ -103,9 +103,6 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 // }
 
 void watchDisplayUpdate() {
-
-    
-
     printf("Watching \n");
     fd = inotify_init();
 
@@ -133,6 +130,7 @@ void watchDisplayUpdate() {
             } else if (event->mask & IN_MODIFY) {
                 printf("The file %s was modified.\n", event->name);
             }
+            watchDisplayUpdate();
         }
         ifile += EVENT_SIZE + event->len;
     }
