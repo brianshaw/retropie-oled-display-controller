@@ -131,7 +131,7 @@ int
 ulValidateConfigFileStr (const char* file)
 {
   bcfg = json_object_from_file (file);
-  printf("%s\n---\n", json_object_to_json_string_ext(bcfg, 'JSON_C_TO_STRING_PRETTY'));
+  printf("%s\n---\n", json_object_to_json_string_ext(bcfg, JSON_C_TO_STRING_PRETTY));
 
   return ulValidateConfig (bcfg);
 }
