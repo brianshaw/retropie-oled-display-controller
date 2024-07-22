@@ -146,6 +146,8 @@ loadGameConfig(const char* gameconfig)
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
+    } else {
+      printf ("Game Not Found\n");
     }
     // retVal = ulWriteToBoardFileStr(argv[idx], &board);
   }
