@@ -32,6 +32,7 @@ int initDisplays();
 int turnOffDisplays();
 void watchDisplayUpdate();
 void bye();
+void signalHandler(int sig);
 
 int retVal;
 json_object *bcfg = NULL;
