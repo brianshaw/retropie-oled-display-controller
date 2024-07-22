@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <json.h> # https://github.com/katie-snow/Ultimarc-linux/blob/master/src/libs/pacdrive.c
+#include <json.h> // https://github.com/katie-snow/Ultimarc-linux/blob/master/src/libs/pacdrive.c
 
 typedef struct args
 {
