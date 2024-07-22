@@ -10,7 +10,7 @@
 #include <sys/inotify.h>
 
 #define EVENT_SIZE (sizeof(struct inotify_event)) // Add this line to declare the missing variable
-#define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
+#define BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
