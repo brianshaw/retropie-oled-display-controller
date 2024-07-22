@@ -11,6 +11,7 @@
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
+char* fileToWatch = "test.txt";
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +24,6 @@ int bFlip = 0, bInvert = 0, bWire = 1;
 int fd;
 int wd;
 // char* fileToWatch = argv[1];
-char* fileToWatch = "test.txt";
 
 fd = inotify_init();
 if (fd == -1) {
