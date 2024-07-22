@@ -134,7 +134,7 @@ ulValidateConfigFileStr (const char* file)
 }
 
 int
-loadGameConfig(gameconfig)
+loadGameConfig(const char* gameconfig)
 {
   printf ("Loading %s...\n", gameconfig);
   retVal = ulValidateConfigFileStr (gameconfig);
