@@ -49,6 +49,7 @@ int bFlip = 0, bInvert = 0, bWire = 1;
         perror("read");
     }
 
+    printf("Watching \n");
     while (ifile < length) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
@@ -64,6 +65,8 @@ int bFlip = 0, bInvert = 0, bWire = 1;
         ifile += EVENT_SIZE + event->len;
     }
 
+    printf("Press ENTER to quit\n");
+    getchar();
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
 
