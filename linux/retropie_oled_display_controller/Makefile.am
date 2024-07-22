@@ -11,3 +11,8 @@ all: main
 
 main: main.o
 	$(CC) main.o $(LIBS) -o retropie_oled_display_controller
+
+
+bin_PROGRAMS = main
+main_SOURCES = main.c
+main_LDADD = -ljson-c
