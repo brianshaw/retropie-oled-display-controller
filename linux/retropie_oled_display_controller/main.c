@@ -170,7 +170,7 @@ initDisplays()
   int i;
   int iOLEDAddr = -1; // typical address; it can also be 0x3d
   int iOLEDType0 = OLED_128x64; // Change this for your specific display
-  int iOLEDType1 = OLED_64x32;
+  // int iOLEDType1 = OLED_64x32;
   int bFlip = 0, bInvert = 0, bWire = 1;
 
   // For hardware I2C on the RPI, the clock rate is fixed and set in the
