@@ -1,7 +1,7 @@
 CFLAGS=-c -Wall -O2 -D_LINUX_
 LIBS = -lss_oled -lpigpio -lBitBang_I2C -lm -lpthread
 
-all: sample multi speed
+all: sample multi speed retropie_oled_display_controller
 
 speed: speed_test.o libss_oled.a
 	$(CC) speed_test.o $(LIBS) -o speed
