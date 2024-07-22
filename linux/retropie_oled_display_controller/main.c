@@ -117,7 +117,7 @@ ulValidateConfig (json_object* bcfg)
   else
   {
     retCode = -1;
-    log_err("JSON format invalid");
+    // log_err("JSON format invalid");
   }
 
   return retCode;
