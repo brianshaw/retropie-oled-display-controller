@@ -116,7 +116,7 @@ void updateDisplay() {
     // Process each line of the file
     // ...
     // oledWriteString(&ssoled[0], 0,0,6,line, FONT_SMALL,0,1);
-    printf("%s", line)
+    printf("%s", line);
   }
 
   fclose(file);
