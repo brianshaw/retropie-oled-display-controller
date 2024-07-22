@@ -155,7 +155,10 @@ loadGameConfig(const char* gameconfig)
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
       initDisplays();
-      oledWriteString(&ssoled[0], 0,0,6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+      oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+      printf("Press ENTER to quit\n");
+      getchar();
+      turnOffDisplays();
     } else {
       printf ("Game Not Found\n");
     }
@@ -193,15 +196,18 @@ initDisplays()
       oledSetPixel(&ssoled[0], 127-i, 16+i, 1, 1);
     }
 
-    printf("Press ENTER to quit\n");
     
-    getchar();
-    oledPower(&ssoled[0], 0); // turn off both displays
-    // oledPower(&ssoled[1], 0);
 	}
 	else
 	{
 		printf("Unable to initialize I2C bus 0-2, please check your connections and verify the device address by typing 'i2cdetect -y <channel>\n");
 	}
    return 0;
+}
+
+int
+turnOffDisplays()
+{
+  oledPower(&ssoled[0], 0); // turn off both displays
+  // oledPower(&ssoled[1], 0);
 }
