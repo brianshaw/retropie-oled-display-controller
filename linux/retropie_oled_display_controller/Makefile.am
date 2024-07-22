@@ -7,5 +7,5 @@ AM_LDFLAGS = $(JSON_LIBS) $(LIBUSB_LIBS)
 
 all: main
 
-main: retropie_oled_display_controller.o libss_oled.a
-	$(CC) retropie_oled_display_controller.o $(LIBS) -o retropie_oled_display_controller
+main: main.o libss_oled.a
+	$(CC) main.o $(LIBS) -o retropie_oled_display_controller
