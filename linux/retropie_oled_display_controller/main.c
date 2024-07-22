@@ -19,7 +19,7 @@ typedef struct args
   int multi;
 } args;
 
-void loadGameConfig();
+int loadGameConfig();
 
 int
 main (int argc, char **argv)
