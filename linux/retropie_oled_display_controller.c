@@ -65,10 +65,9 @@ int bFlip = 0, bInvert = 0, bWire = 1;
         ifile += EVENT_SIZE + event->len;
     }
 
-    printf("Press ENTER to quit\n");
-    getchar();
-    (void) inotify_rm_watch(fd, wd);
-    (void) close(fd);
+    
+    // (void) inotify_rm_watch(fd, wd);
+    // (void) close(fd);
 
 
 
@@ -103,6 +102,9 @@ int bFlip = 0, bInvert = 0, bWire = 1;
     getchar();
     oledPower(&ssoled[0], 0); // turn off both displays
     oledPower(&ssoled[1], 0);
+
+    (void) inotify_rm_watch(fd, wd);
+    (void) close(fd);
   }
   else
   {
