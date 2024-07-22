@@ -144,7 +144,7 @@ loadGameConfig(const char* gameconfig)
   printf ("retVal = %d\n", retVal);
   if (retVal == 0)
   {
-    if (json_object_object_get_ex(bcfg, "LED intensity all", &tmp)) {
+    if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
     }
     // retVal = ulWriteToBoardFileStr(argv[idx], &board);
