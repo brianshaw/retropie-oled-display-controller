@@ -216,29 +216,46 @@ int
 initDisplays()
 {
   int i;
-  int iOLEDAddr = -1; // typical address; it can also be 0x3d
+  // int iOLEDAddr = -1; // typical address; it can also be 0x3d
+  int iOLEDAddr1 = 0x3c; // typical address; it can also be 0x3d
+  int iOLEDAddr2 = 0x3d; // typical address; it can also be 0x3d
   int iOLEDType0 = OLED_128x64; // Change this for your specific display
   // int iOLEDType1 = OLED_64x32;
   int bFlip = 0, bInvert = 0, bWire = 1;
 
   // For hardware I2C on the RPI, the clock rate is fixed and set in the
   // /boot/config.txt file, so we pass 0 for the bus speed
-	i=oledInit(&ssoled[0], iOLEDType0, iOLEDAddr, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
+	i=oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
 	if (i != OLED_NOT_FOUND)
 	{
-    printf("Successfully opened I2C bus 1\n");
+    printf("Successfully opened I2C bus 4\n");
     oledSetBackBuffer(&ssoled[0], ucBackBuf);
     oledFill(&ssoled[0], 0,1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
     oledWriteString(&ssoled[0], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[0], 0,3,2,"BIG!",FONT_LARGE,0,1);
+    oledWriteString(&ssoled[0], 0,3,2,"Display 1",FONT_LARGE,0,1);
     oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
-    for (i=0; i<64; i++)
-    {
-      oledSetPixel(&ssoled[0], i, 16+i, 1, 1);
-      oledSetPixel(&ssoled[0], 127-i, 16+i, 1, 1);
-    }
+    // for (i=0; i<64; i++)
+    // {
+    //   oledSetPixel(&ssoled[0], i, 16+i, 1, 1);
+    //   oledSetPixel(&ssoled[0], 127-i, 16+i, 1, 1);
+    // }
+
+
+    oledInit(&ssoled[1], iOLEDType0, iOLEDAddr2, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
+    oledSetBackBuffer(&ssoled[1], ucBackBuf);
+    oledFill(&ssoled[1], 0, 1); // fill with black
+    // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
+    oledWriteString(&ssoled[1], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
+    oledWriteString(&ssoled[1], 0,3,2,"Display 2",FONT_LARGE,0,1);
+    oledWriteString(&ssoled[1], 0,0,5,"Small", FONT_SMALL,0,1);
+    // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
+    // for (i=0; i<64; i++)
+    // {
+    //   oledSetPixel(&ssoled[1], i, 16+i, 1, 1);
+    //   oledSetPixel(&ssoled[1], 127-i, 16+i, 1, 1);
+    // }
 
     
 	}
@@ -256,7 +273,7 @@ turnOffDisplays()
   //   initDisplays();
   // }
   oledPower(&ssoled[0], 0); // turn off both displays
-  // oledPower(&ssoled[1], 0);
+  oledPower(&ssoled[1], 0);
   return 0;
 }
 
