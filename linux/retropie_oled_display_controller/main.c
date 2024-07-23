@@ -234,7 +234,7 @@ initDisplays()
     oledFill(&ssoled[0], 0,1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
     oledWriteString(&ssoled[0], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[0], 0,3,2,"Display 1",FONT_LARGE,0,1);
+    oledWriteString(&ssoled[0], 0,3,2,"OLED 1",FONT_LARGE,0,1);
     oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
     // for (i=0; i<64; i++)
@@ -249,7 +249,7 @@ initDisplays()
     oledFill(&ssoled[1], 0, 1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
     oledWriteString(&ssoled[1], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[1], 0,3,2,"Display 2",FONT_LARGE,0,1);
+    oledWriteString(&ssoled[1], 0,3,2,"OLED 2",FONT_LARGE,0,1);
     oledWriteString(&ssoled[1], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
     // for (i=0; i<64; i++)

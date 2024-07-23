@@ -32,7 +32,9 @@ int main(int argc, char *argv[])
 {
   fprintf(stdout, "main");
 int i;
-int iOLEDAddr = -1; // typical address; it can also be 0x3d
+// int iOLEDAddr = -1; // typical address; it can also be 0x3d
+int iOLEDAddr1 = 0x3c; // typical address; it can also be 0x3d
+int iOLEDAddr2 = 0x3d; // typical address; it can also be 0x3d
 int iOLEDType0 = OLED_128x64; // Change this for your specific display
 int iOLEDType1 = OLED_64x32;
 int bFlip = 0, bInvert = 0, bWire = 1;
