@@ -198,8 +198,12 @@ loadGameConfig()
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
       initDisplays();
-      oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
-      oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
+      // oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+      // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
+      if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
+        oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+        oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+      }
       // printf("Press ENTER to quit\n");
       // getchar();
       // turnOffDisplays();
@@ -233,9 +237,9 @@ initDisplays()
     oledSetBackBuffer(&ssoled[0], ucBackBuf);
     oledFill(&ssoled[0], 0,1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[0], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[0], 0,3,2,"OLED 1",FONT_LARGE,0,1);
-    oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
+    oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
+    // oledWriteString(&ssoled[0], 0,3,2,"OLED 1",FONT_LARGE,0,1);
+    // oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
     // for (i=0; i<64; i++)
     // {
@@ -248,9 +252,9 @@ initDisplays()
     oledSetBackBuffer(&ssoled[1], ucBackBuf);
     oledFill(&ssoled[1], 0, 1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[1], 0,0,1,"SS_OLED Library!",FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[1], 0,3,2,"OLED 2",FONT_LARGE,0,1);
-    oledWriteString(&ssoled[1], 0,0,5,"Small", FONT_SMALL,0,1);
+    oledWriteString(&ssoled[1], 0,0,1,"SS_OLED 2",FONT_NORMAL,0,1);
+    // oledWriteString(&ssoled[1], 0,3,2,"OLED 2",FONT_LARGE,0,1);
+    // oledWriteString(&ssoled[1], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
     // for (i=0; i<64; i++)
     // {
