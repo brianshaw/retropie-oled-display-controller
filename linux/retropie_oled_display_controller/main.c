@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <json.h> // https://github.com/katie-snow/Ultimarc-linux/blob/master/src/libs/pacdrive.c
 #include <stdint.h>
 #include <unistd.h>
@@ -37,9 +38,11 @@ void signalHandler(int sig);
 void delay(int number_of_seconds);
 
 int retVal;
+bool watching = true;
 json_object *bcfg = NULL;
 json_object* tmp = NULL;
 char* pathToPacDriveJsonGameConfig;
+
 
 #define EVENT_SIZE (sizeof(struct inotify_event)) // Add this line to declare the missing variable
 #define BUF_LEN (1024 * (EVENT_SIZE + 16)) // Add this line to declare the missing variable
@@ -301,7 +304,7 @@ void watchDisplayUpdate() {
         perror("read");
     }
 
-    while (ifile < length) {
+    while (ifile < length && watching) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
         if (event->len) {
@@ -346,8 +349,7 @@ bye ()
     // delay(1);
     printf ("Displays turned off\n");
   }
-  (void) inotify_rm_watch(fd, wd);
-  (void) close(fd);
+  watching = false;
 }
 
 void signalHandler(int sig) {
