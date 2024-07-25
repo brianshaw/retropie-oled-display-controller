@@ -74,6 +74,8 @@ main (int argc, char **argv)
   sigaction (SIGTERM, NULL, &old_action);
   if (old_action.sa_handler != SIG_IGN)
     sigaction (SIGTERM, &new_action, NULL);
+  if (old_action.sa_handler != SIG_IGN)
+    sigaction (SIGCONT, &new_action, NULL);
 
   int idx;
   
