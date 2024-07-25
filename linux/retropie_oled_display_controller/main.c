@@ -209,18 +209,24 @@ loadGameConfig()
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
-      // initDisplays();
-      // oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
-      // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
-      if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
-        oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+      gameFound = json_object_to_json_string(tmp);
+      if (gameFound == 'alloff') {
+        printf ("Game Found - All Off Reset Displays\n");
+        resetDisplays();
+      } else {
+        // initDisplays();
+        // oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+        // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
+        if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
+          oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+        }
+        if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
+          oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
+        }
+        // printf("Press ENTER to quit\n");
+        // getchar();
+        // turnOffDisplays();
       }
-      if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
-        oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
-      }
-      // printf("Press ENTER to quit\n");
-      // getchar();
-      // turnOffDisplays();
     } else {
       printf ("Game Not Found\n");
       resetDisplays();
