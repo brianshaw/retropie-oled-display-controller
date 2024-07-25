@@ -58,6 +58,7 @@ char buffer[BUF_LEN];
 int
 main (int argc, char **argv)
 {
+  printf("Retropi Oled Display Controller - Main called\n");
   struct sigaction new_action, old_action;
 
   /* Set up the structure to specify the new action. */
