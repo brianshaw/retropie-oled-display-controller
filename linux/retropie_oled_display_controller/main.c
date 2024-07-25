@@ -307,7 +307,7 @@ void watchDisplayUpdate() {
         perror("read");
     }
 
-    while (ifile < length && watching) {
+    while (ifile < length && watching == true) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
         if (event->len) {
