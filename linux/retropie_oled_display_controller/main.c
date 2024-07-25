@@ -353,8 +353,8 @@ void watchDisplayUpdate() {
         struct inotify_event *event = (struct inotify_event *) &buffer[ifile];
         printf("Event: %s\n", event->name);
         printf("Event len: %d\n", event->len);
-        // if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
-        if (event->len && event->mask & IN_CLOSE_WRITE && strcmp(event->name, "pacdrive.json") == 0) {
+        // if (event->len && event->mask & IN_CLOSE_WRITE && strcmp(event->name, "pacdrive.json") == 0) {
+        if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
           sleep(2);
           loadGameConfig();
         }
