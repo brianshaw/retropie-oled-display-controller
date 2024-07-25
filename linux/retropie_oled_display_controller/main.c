@@ -310,12 +310,7 @@ void watchDisplayUpdate() {
     // wd = inotify_add_watch(fd, ".",
     wd = inotify_add_watch(fd, folderToWatch,
         IN_MODIFY | IN_CREATE | IN_DELETE);
-    length = read(fd, buffer, BUF_LEN);
-
-    if (length < 0) {
-        perror("read");
-        printf("read error starting\n");
-    }
+    
     
     struct tm *timeinfo;
     char timestamp[20];
@@ -325,6 +320,11 @@ void watchDisplayUpdate() {
     printf("Watching: %s\n", timestamp);
 
     while (watching == true) {
+      length = read(fd, buffer, BUF_LEN);
+      if (length < 0) {
+          perror("read");
+          printf("read error starting\n");
+      }
       while (ifile < length) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
