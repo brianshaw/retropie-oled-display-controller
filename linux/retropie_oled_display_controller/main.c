@@ -137,8 +137,8 @@ main (int argc, char **argv)
   pathToPacDriveJsonGameConfig = argv[1];
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
   gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
-  printf ("Error Loading pathToPacDriveJsonGameConfig = %d\n", gameJsonFound);
   if (gameJsonFound) {
+  printf ("Error Loading pathToPacDriveJsonGameConfig = %d\n", gameJsonFound);
     retVal = 1;
     goto exit;
   }
