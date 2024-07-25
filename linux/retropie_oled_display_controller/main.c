@@ -289,7 +289,8 @@ initDisplays()
    return 0;
 }
 
-int resetDisplays()
+void
+resetDisplays()
 {
   oledFill(&ssoled[0], 0,1); // fill with black
   oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
