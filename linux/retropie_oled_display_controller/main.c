@@ -296,7 +296,7 @@ void watchDisplayUpdate() {
     
     if (fd < 0) {
         perror("inotify_init");
-        printf("inotify_init error starting\n")l
+        printf("inotify_init error starting\n");
     }
 
     // wd = inotify_add_watch(fd, ".",
