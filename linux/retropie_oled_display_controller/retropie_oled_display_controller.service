@@ -6,8 +6,6 @@ Requires=multi-user.target
 [Service]
 Type=simple
 ExecStart=/home/pi/retropie-oled-display-controller/linux/retropie_oled_display_controller/./retropie_oled_display_controller /home/pi/retropie-controller-display-and-lights/pacdrive.json
-StandardOutput=append:/var/log/oled.log
-StandardError=append:/var/log/oled_error.log
 
 [Install]
 WantedBy=multi-user.target
