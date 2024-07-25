@@ -124,7 +124,7 @@ main (int argc, char **argv)
   // }
 
   // atexit(bye);
-
+  initDisplays();
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
   watchDisplayUpdate();
@@ -197,7 +197,7 @@ loadGameConfig()
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
-      initDisplays();
+      // initDisplays();
       // oledWriteString(&ssoled[0], 0, 0, 6, (char*)json_object_to_json_string(tmp), FONT_SMALL,0,1);
       // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
       if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
@@ -346,6 +346,8 @@ bye ()
     // delay(1);
     printf ("Displays turned off\n");
   }
+  (void) inotify_rm_watch(fd, wd);
+  (void) close(fd);
 }
 
 void signalHandler(int sig) {
