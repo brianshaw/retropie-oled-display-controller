@@ -209,7 +209,7 @@ loadGameConfig()
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
-      gameFound = json_object_to_json_string(tmp);
+      json_object* gameFound = json_object_to_json_string(tmp);
       if (gameFound == 'alloff') {
         printf ("Game Found - All Off Reset Displays\n");
         resetDisplays();
