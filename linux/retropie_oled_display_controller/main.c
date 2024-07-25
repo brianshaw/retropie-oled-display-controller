@@ -39,7 +39,7 @@ void signalHandler(int sig);
 void delay(int number_of_seconds);
 
 int retVal;
-int gameFound;
+int gameJsonFound;
 bool watching = true;
 json_object *bcfg = NULL;
 json_object* tmp = NULL;
@@ -134,6 +134,13 @@ main (int argc, char **argv)
   // atexit(bye);
   initDisplays();
   pathToPacDriveJsonGameConfig = argv[1];
+  printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
+  gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
+  printf ("Error Loading pathToPacDriveJsonGameConfig = %d\n", gameJsonFound);
+  if (gameJsonFound) {
+    retVal = 1;
+    goto exit;
+  }
   loadGameConfig();
   watchDisplayUpdate();
   
@@ -200,11 +207,7 @@ ulValidateConfigFileStr (const char* file)
 int
 loadGameConfig()
 {
-  printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
-  gameFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
-
-  printf ("gameFound = %d\n", gameFound);
-  if (gameFound == 0)
+  if (gameJsonFound == 0)
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
