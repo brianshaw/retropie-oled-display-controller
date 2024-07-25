@@ -337,6 +337,7 @@ void watchDisplayUpdate() {
           perror("read");
           printf("read error starting\n");
       }
+      ifile = 0;
       while (ifile < length) {
         struct inotify_event *event = (struct inotify_event *) &buffer[ifile];
         printf("Event: %s\n", event->name);
