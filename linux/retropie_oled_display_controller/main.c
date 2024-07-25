@@ -319,15 +319,16 @@ void watchDisplayUpdate() {
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %I:%M%p", timeinfo);
     printf("Watching: %s\n", timestamp);
 
-    while (watching == true) {
+    while (watching) {
       length = read(fd, buffer, BUF_LEN);
       if (length < 0) {
           perror("read");
           printf("read error starting\n");
       }
       while (ifile < length) {
-        struct inotify_event *event =
-            (struct inotify_event *) &buffer[ifile];
+        struct inotify_event *event = (struct inotify_event *) &buffer[ifile];
+        printf("Event: %s\n", event->name);
+        printf("Event len: %d\n", event->len);
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
           loadGameConfig();
         }
