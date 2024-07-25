@@ -331,6 +331,7 @@ void watchDisplayUpdate() {
     printf("Watching: %s\n", timestamp);
 
     while (watching) {
+      printf("Watching\n");
       length = read(fd, buffer, BUF_LEN);
       if (length < 0) {
           perror("read");
