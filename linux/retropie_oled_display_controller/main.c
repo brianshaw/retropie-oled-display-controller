@@ -135,6 +135,9 @@ main (int argc, char **argv)
   loadGameConfig();
   watchDisplayUpdate();
   
+  while (watching) {
+    // Wait indefinitely until watching equals false
+  }
 
   exit: return retVal;
 }
@@ -292,8 +295,6 @@ turnOffDisplays()
 
 void watchDisplayUpdate() {
     printf("watchDisplayUpdate called\n");
-    length = 0;
-    ifile = 0;
     fd = inotify_init();
     
     if (fd < 0) {
@@ -311,27 +312,62 @@ void watchDisplayUpdate() {
         printf("read error starting\n");
     }
     printf("Watching \n");
-    while (ifile < length && watching == true) {
+    while (watching == true) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
-        if (event->len) {
-            if (event->mask & IN_CREATE) {
-                printf("The file %s was created.\n", event->name);
-                loadGameConfig();
-            // } else if (event->mask & IN_DELETE) {
-            //     printf("The file %s was deleted.\n", event->name);
-            } else if (event->mask & IN_MODIFY) {
-                printf("The file %s was modified.\n", event->name);
-                loadGameConfig();
-            }
+        if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pac_drive.json") == 0) {
+          loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
     }
-
-    (void) inotify_rm_watch(fd, wd);
-    (void) close(fd);
-    watchDisplayUpdate();
 }
+
+void stopWatchingFolder() {
+  inotify_rm_watch(fd, wd);
+  close(fd);
+}
+
+
+// void watchDisplayUpdate() {
+//     printf("watchDisplayUpdate called\n");
+//     fd = inotify_init();
+    
+//     if (fd < 0) {
+//         perror("inotify_init");
+//         printf("inotify_init error starting\n");
+//     }
+
+//     // wd = inotify_add_watch(fd, ".",
+//     wd = inotify_add_watch(fd, folderToWatch,
+//         IN_MODIFY | IN_CREATE | IN_DELETE);
+//     length = read(fd, buffer, BUF_LEN);
+
+//     if (length < 0) {
+//         perror("read");
+//         printf("read error starting\n");
+//     }
+//     printf("Watching \n");
+//     while (ifile < length && watching == true) {
+//         struct inotify_event *event =
+//             (struct inotify_event *) &buffer[ifile];
+//         if (event->len) {
+//             if (event->mask & IN_CREATE) {
+//                 printf("The file %s was created.\n", event->name);
+//             } else if (event->mask & IN_DELETE) {
+//                 printf("The file %s was deleted.\n", event->name);
+//             } else if (event->mask & IN_MODIFY) {
+//                 printf("The file %s was modified.\n", event->name);
+//             }
+//             // initDisplays();
+//             loadGameConfig();
+//             watchDisplayUpdate();
+//         }
+//         ifile += EVENT_SIZE + event->len;
+//     }
+
+//     (void) inotify_rm_watch(fd, wd);
+//     (void) close(fd);
+// }
 
 
 
