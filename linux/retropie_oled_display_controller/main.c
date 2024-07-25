@@ -320,15 +320,15 @@ void watchDisplayUpdate() {
             } else if (event->mask & IN_MODIFY) {
                 printf("The file %s was modified.\n", event->name);
             }
-            initDisplays();
+            // initDisplays();
             loadGameConfig();
-            watchDisplayUpdate();
         }
         ifile += EVENT_SIZE + event->len;
     }
 
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
+    watchDisplayUpdate();
 }
 
 
