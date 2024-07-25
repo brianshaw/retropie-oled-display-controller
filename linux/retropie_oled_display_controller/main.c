@@ -352,7 +352,7 @@ void initWatchingLoop () {
         }
         ifile += EVENT_SIZE + event->len;
     }
-    ifile = 0
+    ifile = 0;
     if (watching == true) {
       (void) initWatchingLoop();
     }
