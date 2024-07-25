@@ -200,10 +200,10 @@ int
 loadGameConfig()
 {
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
-  retVal = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
+  gameFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
 
-  printf ("retVal = %d\n", retVal);
-  if (retVal == 0)
+  printf ("gameFound = %d\n", gameFound);
+  if (gameFound == 0)
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_to_json_string(tmp));
@@ -224,6 +224,9 @@ loadGameConfig()
       turnOffDisplays();
     }
     // retVal = ulWriteToBoardFileStr(argv[idx], &board);
+  } else {
+    printf ("Game Not Found\n");
+    turnOffDisplays();
   }
 
   return 0;
@@ -319,13 +322,16 @@ void watchDisplayUpdate() {
     timeinfo = localtime(&rawtime);
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %I:%M%p", timeinfo);
     printf("Watching: %s\n", timestamp);
+
     while (watching == true) {
+      while (ifile < length) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
           loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
+      }
     }
 }
 
@@ -400,6 +406,7 @@ bye ()
     printf ("Displays turned off\n");
   }
   watching = false;
+  stopWatchingFolder();
 }
 
 void signalHandler(int sig) {
