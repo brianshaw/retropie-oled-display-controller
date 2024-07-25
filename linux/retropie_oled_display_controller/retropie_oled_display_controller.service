@@ -1,6 +1,7 @@
 [Unit]
 Description=Retropie Oled Display Contoller
 After=multi-user.target
+Requires=multi-user.target
 
 [Service]
 Type=idle
