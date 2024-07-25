@@ -315,7 +315,7 @@ void watchDisplayUpdate() {
     while (watching == true) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
-        if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pac_drive.json") == 0) {
+        if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
           loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
