@@ -19,6 +19,7 @@
 #include "ss_oled.h"
 #include <signal.h>
 #include <time.h>
+time_t rawtime;
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
@@ -311,7 +312,13 @@ void watchDisplayUpdate() {
         perror("read");
         printf("read error starting\n");
     }
-    printf("Watching \n");
+    
+    struct tm *timeinfo;
+    char timestamp[20];
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %I:%M%p", timeinfo);
+    printf("Watching: %s\n", timestamp);
     while (watching == true) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
