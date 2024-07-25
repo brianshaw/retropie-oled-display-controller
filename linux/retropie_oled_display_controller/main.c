@@ -291,7 +291,7 @@ turnOffDisplays()
 }
 
 void watchDisplayUpdate() {
-    printf("Watching \n");
+    printf("watchDisplayUpdate called\n");
     fd = inotify_init();
 
     if (fd < 0) {
@@ -306,7 +306,7 @@ void watchDisplayUpdate() {
     if (length < 0) {
         perror("read");
     }
-
+    printf("Watching \n");
     while (ifile < length && watching == true) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
