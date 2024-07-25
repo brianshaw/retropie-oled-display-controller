@@ -293,9 +293,10 @@ turnOffDisplays()
 void watchDisplayUpdate() {
     printf("watchDisplayUpdate called\n");
     fd = inotify_init();
-
+    
     if (fd < 0) {
         perror("inotify_init");
+        printf("inotify_init error starting\n")l
     }
 
     // wd = inotify_add_watch(fd, ".",
@@ -305,6 +306,7 @@ void watchDisplayUpdate() {
 
     if (length < 0) {
         perror("read");
+        printf("read error starting\n");
     }
     printf("Watching \n");
     while (ifile < length && watching == true) {
