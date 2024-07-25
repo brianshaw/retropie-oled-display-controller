@@ -135,20 +135,15 @@ main (int argc, char **argv)
   // atexit(bye);
   initDisplays();
   pathToPacDriveJsonGameConfig = argv[1];
-  printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
-  gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
-  if (gameJsonFound) {
-  printf ("Error Loading pathToPacDriveJsonGameConfig = %d\n", gameJsonFound);
-    retVal = 1;
-    goto exit;
-  }
+  
   loadGameConfig();
   watchDisplayUpdate();
   
-  while (watching) {
-    // Wait indefinitely until watching equals false
-  }
+  // while (watching) {
+  //   // Wait indefinitely until watching equals false
+  // }
 
+  printf("Exiting\n");
   exit: return retVal;
 }
 
@@ -208,6 +203,8 @@ ulValidateConfigFileStr (const char* file)
 int
 loadGameConfig()
 {
+  printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
+  gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
   if (gameJsonFound == 0)
   {
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
