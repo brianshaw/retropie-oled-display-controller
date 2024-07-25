@@ -343,7 +343,7 @@ void watchDisplayUpdate() {
         printf("Event: %s\n", event->name);
         printf("Event len: %d\n", event->len);
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
-          sleep(1);
+          sleep(2);
           loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
