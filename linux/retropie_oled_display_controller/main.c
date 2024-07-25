@@ -223,12 +223,12 @@ loadGameConfig()
       // turnOffDisplays();
     } else {
       printf ("Game Not Found\n");
-      turnOffDisplays();
+      resetDisplays();
     }
     // retVal = ulWriteToBoardFileStr(argv[idx], &board);
   } else {
     printf ("Game Not Found\n");
-    turnOffDisplays();
+    resetDisplays();
   }
 
   return 0;
@@ -252,9 +252,9 @@ initDisplays()
 	{
     printf("Successfully opened I2C bus 4\n");
     oledSetBackBuffer(&ssoled[0], ucBackBuf);
-    oledFill(&ssoled[0], 0,1); // fill with black
+    // oledFill(&ssoled[0], 0,1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
+    // oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
     // oledWriteString(&ssoled[0], 0,3,2,"OLED 1",FONT_LARGE,0,1);
     // oledWriteString(&ssoled[0], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
@@ -267,9 +267,9 @@ initDisplays()
 
     oledInit(&ssoled[1], iOLEDType0, iOLEDAddr2, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
     oledSetBackBuffer(&ssoled[1], ucBackBuf);
-    oledFill(&ssoled[1], 0, 1); // fill with black
+    // oledFill(&ssoled[1], 0, 1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
-    oledWriteString(&ssoled[1], 0,0,1,"SS_OLED 2",FONT_NORMAL,0,1);
+    // oledWriteString(&ssoled[1], 0,0,1,"SS_OLED 2",FONT_NORMAL,0,1);
     // oledWriteString(&ssoled[1], 0,3,2,"OLED 2",FONT_LARGE,0,1);
     // oledWriteString(&ssoled[1], 0,0,5,"Small", FONT_SMALL,0,1);
     // oledWriteString(&ssoled[0], 0,0,6,argv[1], FONT_SMALL,0,1);
@@ -279,13 +279,22 @@ initDisplays()
     //   oledSetPixel(&ssoled[1], 127-i, 16+i, 1, 1);
     // }
 
-    
+    resetDisplays();
 	}
 	else
 	{
 		printf("Unable to initialize I2C bus 0-2, please check your connections and verify the device address by typing 'i2cdetect -y <channel>\n");
 	}
    return 0;
+}
+
+int resetDisplays()
+{
+  oledFill(&ssoled[0], 0,1); // fill with black
+  oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
+
+  oledFill(&ssoled[1], 0, 1); // fill with black
+  oledWriteString(&ssoled[1], 0,0,1,"SS_OLED 2",FONT_NORMAL,0,1);
 }
 
 int
