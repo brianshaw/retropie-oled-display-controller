@@ -292,6 +292,8 @@ turnOffDisplays()
 
 void watchDisplayUpdate() {
     printf("watchDisplayUpdate called\n");
+    length = 0;
+    ifile = 0;
     fd = inotify_init();
     
     if (fd < 0) {
@@ -315,13 +317,13 @@ void watchDisplayUpdate() {
         if (event->len) {
             if (event->mask & IN_CREATE) {
                 printf("The file %s was created.\n", event->name);
-            } else if (event->mask & IN_DELETE) {
-                printf("The file %s was deleted.\n", event->name);
+                loadGameConfig();
+            // } else if (event->mask & IN_DELETE) {
+            //     printf("The file %s was deleted.\n", event->name);
             } else if (event->mask & IN_MODIFY) {
                 printf("The file %s was modified.\n", event->name);
+                loadGameConfig();
             }
-            // initDisplays();
-            loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
     }
