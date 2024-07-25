@@ -155,6 +155,7 @@ ulValidateConfig (json_object* bcfg)
 
   if (bcfg)
   {
+    printf("%s\n---\n", json_object_to_json_string_ext(bcfg, JSON_C_TO_STRING_PRETTY));
     // retCode = ulGetProdAndVersion (bcfg, ulcfg);
     
     // if (retCode == 0)
@@ -195,8 +196,6 @@ int
 ulValidateConfigFileStr (const char* file)
 {
   bcfg = json_object_from_file (file);
-  printf("%s\n---\n", json_object_to_json_string_ext(bcfg, JSON_C_TO_STRING_PRETTY));
-
   return ulValidateConfig (bcfg);
 }
 
@@ -342,6 +341,7 @@ void watchDisplayUpdate() {
         printf("Event: %s\n", event->name);
         printf("Event len: %d\n", event->len);
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
+          sleep(1);
           loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
