@@ -38,6 +38,7 @@ void bye();
 void signalHandler(int sig);
 void delay(int number_of_seconds);
 int ulValidateConfigFileStr (const char* file);
+void resetDisplays();
 
 int retVal;
 int gameJsonFound;
