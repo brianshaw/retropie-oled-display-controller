@@ -37,6 +37,7 @@ void watchDisplayUpdate();
 void bye();
 void signalHandler(int sig);
 void delay(int number_of_seconds);
+int ulValidateConfigFileStr (const char* file);
 
 int retVal;
 int gameJsonFound;
