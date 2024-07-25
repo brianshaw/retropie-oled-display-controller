@@ -2,6 +2,9 @@
 Description=Retropie Oled Display Contoller
 After=multi-user.target
 Requires=multi-user.target
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=retropie_oled_display_controller
 
 [Service]
 Type=idle
