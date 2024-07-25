@@ -39,6 +39,7 @@ void signalHandler(int sig);
 void delay(int number_of_seconds);
 
 int retVal;
+int gameFound;
 bool watching = true;
 json_object *bcfg = NULL;
 json_object* tmp = NULL;
