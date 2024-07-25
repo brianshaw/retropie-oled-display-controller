@@ -32,10 +32,11 @@ typedef struct args
 int loadGameConfig();
 int initDisplays();
 int turnOffDisplays();
-void watchDisplayUpdate();
+void watchDisplayInit();
 void bye();
 void signalHandler(int sig);
 void delay(int number_of_seconds);
+void initWatchingLoop();
 
 int retVal;
 bool watching = true;
@@ -133,7 +134,7 @@ main (int argc, char **argv)
   initDisplays();
   pathToPacDriveJsonGameConfig = argv[1];
   loadGameConfig();
-  watchDisplayUpdate();
+  watchDisplayInit();
   
 
   exit: return retVal;
@@ -290,8 +291,8 @@ turnOffDisplays()
   return 0;
 }
 
-void watchDisplayUpdate() {
-    printf("watchDisplayUpdate called\n");
+void watchDisplayInit() {
+    printf("watchDisplayInit called\n");
     fd = inotify_init();
     
     if (fd < 0) {
@@ -309,7 +310,32 @@ void watchDisplayUpdate() {
         printf("read error starting\n");
     }
     printf("Watching \n");
-    while (ifile < length && watching == true) {
+    initWatchingLoop();
+    // while (ifile < length && watching == true) {
+    //     struct inotify_event *event =
+    //         (struct inotify_event *) &buffer[ifile];
+    //     if (event->len) {
+    //         if (event->mask & IN_CREATE) {
+    //             printf("The file %s was created.\n", event->name);
+    //         } else if (event->mask & IN_DELETE) {
+    //             printf("The file %s was deleted.\n", event->name);
+    //         } else if (event->mask & IN_MODIFY) {
+    //             printf("The file %s was modified.\n", event->name);
+    //         }
+    //         // initDisplays();
+    //         loadGameConfig();
+    //         // watchDisplayInit();
+    //     }
+    //     ifile += EVENT_SIZE + event->len;
+    // }
+
+    // ifile = 0
+    // (void) inotify_rm_watch(fd, wd);
+    // (void) close(fd);
+}
+
+void initWatchingLoop () {
+  while (ifile < length && watching == true) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[ifile];
         if (event->len) {
@@ -322,15 +348,16 @@ void watchDisplayUpdate() {
             }
             // initDisplays();
             loadGameConfig();
+            // watchDisplayInit();
         }
         ifile += EVENT_SIZE + event->len;
     }
-
-    (void) inotify_rm_watch(fd, wd);
-    (void) close(fd);
-    watchDisplayUpdate();
+    ifile = 0
+    if (watching == true) {
+      (void) initWatchingLoop();
+    }
+    
 }
-
 
 
 void delay(int number_of_seconds)
@@ -355,6 +382,8 @@ bye ()
     printf ("Displays turned off\n");
   }
   watching = false;
+  (void) inotify_rm_watch(fd, wd);
+  (void) close(fd);
 }
 
 void signalHandler(int sig) {
