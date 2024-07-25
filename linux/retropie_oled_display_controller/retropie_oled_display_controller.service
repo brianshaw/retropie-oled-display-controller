@@ -2,6 +2,8 @@
 Description=Retropie Oled Display Contoller
 After=multi-user.target
 Requires=multi-user.target
+StandardOutput=append:/home/pi/oled.log
+StandardError=append:/home/user/oled.log
 
 [Service]
 Type=simple
