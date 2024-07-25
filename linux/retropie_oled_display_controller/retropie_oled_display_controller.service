@@ -4,7 +4,7 @@ After=multi-user.target
 Requires=multi-user.target
 
 [Service]
-Type=idle
+Type=simple
 ExecStart=/home/pi/retropie-oled-display-controller/linux/retropie_oled_display_controller/./retropie_oled_display_controller /home/pi/retropie-controller-display-and-lights/pacdrive.json
 
 [Install]
