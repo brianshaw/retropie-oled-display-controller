@@ -55,22 +55,22 @@ char buffer[BUF_LEN];
 int
 main (int argc, char **argv)
 {
-  // struct sigaction new_action, old_action;
+  struct sigaction new_action, old_action;
 
-  // /* Set up the structure to specify the new action. */
-  // new_action.sa_handler = signalHandler;
-  // sigemptyset (&new_action.sa_mask);
-  // new_action.sa_flags = 0;
+  /* Set up the structure to specify the new action. */
+  new_action.sa_handler = signalHandler;
+  sigemptyset (&new_action.sa_mask);
+  new_action.sa_flags = 0;
 
-  // sigaction (SIGINT, NULL, &old_action);
-  // if (old_action.sa_handler != SIG_IGN)
-  //   sigaction (SIGINT, &new_action, NULL);
-  // sigaction (SIGHUP, NULL, &old_action);
-  // if (old_action.sa_handler != SIG_IGN)
-  //   sigaction (SIGHUP, &new_action, NULL);
-  // sigaction (SIGTERM, NULL, &old_action);
-  // if (old_action.sa_handler != SIG_IGN)
-  //   sigaction (SIGTERM, &new_action, NULL);
+  sigaction (SIGINT, NULL, &old_action);
+  if (old_action.sa_handler != SIG_IGN)
+    sigaction (SIGINT, &new_action, NULL);
+  sigaction (SIGHUP, NULL, &old_action);
+  if (old_action.sa_handler != SIG_IGN)
+    sigaction (SIGHUP, &new_action, NULL);
+  sigaction (SIGTERM, NULL, &old_action);
+  if (old_action.sa_handler != SIG_IGN)
+    sigaction (SIGTERM, &new_action, NULL);
 
   int idx;
   
@@ -348,9 +348,9 @@ bye ()
   }
 }
 
-// void signalHandler(int sig) {
-//   printf("Caught signal %d\n", sig);
-//   // turnOffDisplays();
-//   bye();
-//   exit(0);
-// }
+void signalHandler(int sig) {
+  printf("Caught signal %d\n", sig);
+  // turnOffDisplays();
+  bye();
+  exit(0);
+}
