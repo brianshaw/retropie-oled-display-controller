@@ -289,6 +289,7 @@ initDisplays()
   } else {
     printf("Displays not created successfully\n");
   }
+  return 0;
 }
 
 int
