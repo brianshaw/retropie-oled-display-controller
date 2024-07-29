@@ -268,7 +268,7 @@ int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType,
       return -1;
     }
   } else {
-    printf("Display already initialized\n");
+    printf("Display already initialized %d\n", *buttonInitated);
   }
   return 0;
 }
