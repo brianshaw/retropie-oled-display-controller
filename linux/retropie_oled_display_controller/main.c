@@ -405,6 +405,7 @@ void watchDisplayUpdate() {
         printf("Event type: %d\n", event->mask);
         printf("Event IN_CLOSE_WRITE: %d\n", IN_CLOSE_WRITE);
         printf("Event IN_MODIFY: %d\n", IN_MODIFY);
+        printf("Event CLOSE_WRITE: %d\n", CLOSE_WRITE);
         // if (event->len && event->mask & IN_CLOSE_WRITE && strcmp(event->name, "pacdrive.json") == 0) {
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
           sleep(5);
