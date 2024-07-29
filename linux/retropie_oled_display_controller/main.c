@@ -44,6 +44,7 @@ void signalHandler(int sig);
 void delay(int number_of_seconds);
 int ulValidateConfigFileStr (const char* file);
 void resetDisplays();
+void debounce(void (*func)(), int delay_ms);
 
 int retVal;
 int gameJsonFound;
@@ -432,8 +433,9 @@ void watchDisplayUpdate() {
         // printf("Event IN_MODIFY: %d\n", IN_MODIFY);
         // if (event->len && event->mask & IN_CLOSE_WRITE && strcmp(event->name, "pacdrive.json") == 0) {
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
-          sleep(5);
-          loadGameConfig();
+          // sleep(1);
+          // loadGameConfig();
+          debounce(loadGameConfig, 1000);
         }
         ifile += EVENT_SIZE + event->len;
       }
@@ -519,4 +521,20 @@ void signalHandler(int sig) {
   // turnOffDisplays();
   bye();
   exit(0);
+}
+
+// Debouncing function
+void debounce(void (*func)(), int delay_ms) {
+  static clock_t last_timer = 0;
+  clock_t now = clock();
+
+  if (last_timer) {
+    clock_t diff = (now - last_timer) * 1000 / CLOCKS_PER_SEC;
+    if (diff < delay_ms) {
+      return;
+    }
+  }
+
+  func();
+  last_timer = now;
 }
