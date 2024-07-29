@@ -34,7 +34,8 @@ typedef struct args
   int multi;
 } args;
 
-void loadGameConfig();
+int loadGameConfig();
+int loadGameConfigCalledTimeStamp = 0;
 int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
 int initDisplays();
 int turnOffDisplays();
@@ -44,7 +45,6 @@ void signalHandler(int sig);
 void delay(int number_of_seconds);
 int ulValidateConfigFileStr (const char* file);
 void resetDisplays();
-void debounce(void (*func)(), int delay_ms);
 
 int retVal;
 int gameJsonFound;
@@ -206,9 +206,21 @@ ulValidateConfigFileStr (const char* file)
 }
 
 // loadGameConfig(const char* gameconfig)
-void
+int
 loadGameConfig()
 {
+  if (loadGameConfigCalledTimeStamp == 0) {
+    loadGameConfigCalledTimeStamp = time(&rawtime);
+  } else {
+    time_t currentTime;
+    currentTime = time(&rawtime);
+    if (difftime(currentTime, loadGameConfigCalledTimeStamp) < 1) {
+      printf("loadGameConfig called too soon\n");
+      return 0;
+    } else {
+      loadGameConfigCalledTimeStamp = 0;
+    }
+  }
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
   gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
   if (gameJsonFound == 0)
@@ -266,7 +278,7 @@ loadGameConfig()
     resetDisplays();
   }
 
-  // return 0;
+  return 0;
 }
 
 // create method to initDisplay params iOLEDAddr, iOLEDType, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin
@@ -433,9 +445,8 @@ void watchDisplayUpdate() {
         // printf("Event IN_MODIFY: %d\n", IN_MODIFY);
         // if (event->len && event->mask & IN_CLOSE_WRITE && strcmp(event->name, "pacdrive.json") == 0) {
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
-          // sleep(1);
-          // loadGameConfig();
-          debounce(loadGameConfig, 1000);
+          sleep(1);
+          loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
       }
@@ -523,18 +534,3 @@ void signalHandler(int sig) {
   exit(0);
 }
 
-// Debouncing function
-void debounce(void (*func)(), int delay_ms) {
-  static clock_t last_timer = 0;
-  clock_t now = clock();
-
-  if (last_timer) {
-    clock_t diff = (now - last_timer) * 1000 / CLOCKS_PER_SEC;
-    if (diff < delay_ms) {
-      return;
-    }
-  }
-
-  func();
-  last_timer = now;
-}
