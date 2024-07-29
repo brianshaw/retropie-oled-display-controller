@@ -214,6 +214,7 @@ loadGameConfig()
   } else {
     time_t currentTime;
     currentTime = time(&rawtime);
+    printf("diff time: %f\n", difftime(currentTime, loadGameConfigCalledTimeStamp));
     if (difftime(currentTime, loadGameConfigCalledTimeStamp) < 1) {
       printf("loadGameConfig called too soon\n");
       return 0;
