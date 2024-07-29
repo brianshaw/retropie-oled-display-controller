@@ -263,6 +263,8 @@ int initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, in
       printf("Unable to initialize I2C bus %d on address %d, please check your connections and verify the device address by typing 'i2cdetect -y %d'\n", iOLEDChannel, iOLEDAddr, iOLEDChannel);
       return -1;
     }
+  } else {
+    printf("Display already initialized\n");
   }
   return 0;
 }
