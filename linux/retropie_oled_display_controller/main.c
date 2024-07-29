@@ -34,7 +34,7 @@ typedef struct args
   int multi;
 } args;
 
-int loadGameConfig();
+void loadGameConfig();
 int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
 int initDisplays();
 int turnOffDisplays();
@@ -206,7 +206,7 @@ ulValidateConfigFileStr (const char* file)
 }
 
 // loadGameConfig(const char* gameconfig)
-int
+void
 loadGameConfig()
 {
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
@@ -266,7 +266,7 @@ loadGameConfig()
     resetDisplays();
   }
 
-  return 0;
+  // return 0;
 }
 
 // create method to initDisplay params iOLEDAddr, iOLEDType, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin
