@@ -219,7 +219,7 @@ loadGameConfig()
       printf("loadGameConfig called too soon\n");
       return 0;
     } else {
-      loadGameConfigCalledTimeStamp = time(&rawtime);
+      loadGameConfigCalledTimeStamp = 0;
     }
   }
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
