@@ -376,9 +376,11 @@ resetDisplays()
 {
   oledFill(&ssoled[0], 0,1); // fill with black
   oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
+  buttonAinitated = -1;
 
   oledFill(&ssoled[1], 0, 1); // fill with black
   oledWriteString(&ssoled[1], 0,0,1,"SS_OLED 2",FONT_NORMAL,0,1);
+  buttonBinitated = -1;
 }
 
 int
