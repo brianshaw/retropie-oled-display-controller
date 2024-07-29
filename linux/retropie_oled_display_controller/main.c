@@ -251,9 +251,10 @@ int initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, in
   int bFlip = 0, bInvert = 0, bWire = 1;
   int i;
   if (&ssoled[iOLEDidx] == NULL) {
-    i = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, iOLEDChannel, SLCpin, SDApin, 0);
+    // oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
+    i = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
     if (i != OLED_NOT_FOUND) {
-      printf("Successfully opened I2C bus %d on address %d on channel %d on SLC pin %d on SDA pin %d\n", iOLEDAddr, iOLEDChannel, SLCpin, SDApin);
+      printf("Successfully opened I2C bus %d on address %d on SLC pin %d on SDA pin %d\n", iOLEDChannel, iOLEDAddr, SLCpin, SDApin);
       oledSetBackBuffer(&ssoled[iOLEDidx], ucBackBuf);
       resetDisplays();
     } else {
@@ -280,7 +281,7 @@ initDisplays()
   int buttonA_created = initDisplay(buttonAidx, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
   // B
   int buttonBidx = 1;
-  int buttonBidx = initDisplay(buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  int buttonB_created = initDisplay(buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
 
   if (buttonA_created == 0 && buttonB_created == 0) {
     printf("Displays created successfully\n");
