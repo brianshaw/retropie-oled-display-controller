@@ -135,7 +135,7 @@ main (int argc, char **argv)
   // }
 
   // atexit(bye);
-  initDisplays();
+  // initDisplays(); // used to work
   pathToPacDriveJsonGameConfig = argv[1];
   
   loadGameConfig();
