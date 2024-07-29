@@ -211,7 +211,8 @@ loadGameConfig()
 {
   if (loadGameConfigCalledTimeStamp == 0) {
     loadGameConfigCalledTimeStamp = time(&rawtime);
-  } else {
+  }
+  //  else {
     time_t currentTime;
     currentTime = time(&rawtime);
     printf("diff time: %f\n", difftime(currentTime, loadGameConfigCalledTimeStamp));
@@ -221,7 +222,7 @@ loadGameConfig()
     } else {
       loadGameConfigCalledTimeStamp = 0;
     }
-  }
+  // }
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
   gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
   if (gameJsonFound == 0)
