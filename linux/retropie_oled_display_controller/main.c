@@ -211,7 +211,7 @@ loadGameConfig()
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_get_string(tmp));
       const char* gameFound = json_object_get_string(tmp);
-      
+      sleep(2);
       initDisplays();
       
       if (strcmp(gameFound, "alloff") == 0) {
