@@ -229,11 +229,15 @@ loadGameConfig()
           if (json_object_get_string(tmp)) {
             oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           }
+        } else {
+          oledPower(&ssoled[0], 0);
         }
         if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
           if (json_object_get_string(tmp)) {
             oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           }
+        } else {
+          oledPower(&ssoled[1], 0);
         }
         // printf("Press ENTER to quit\n");
         // getchar();
