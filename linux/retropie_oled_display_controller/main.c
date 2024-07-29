@@ -211,8 +211,8 @@ loadGameConfig()
     if (json_object_object_get_ex(bcfg, "game", &tmp)) {
       printf ("Game Found - %s\n", json_object_get_string(tmp));
       const char* gameFound = json_object_get_string(tmp);
-      sleep(2);
-      initDisplays();
+      // sleep(2);
+      initDisplays(); // wasn't here before just testing if i need to turn on displays again
       
       if (strcmp(gameFound, "alloff") == 0) {
         printf ("Game Found - All Off Reset Displays\n");
@@ -402,9 +402,12 @@ void watchDisplayUpdate() {
         struct inotify_event *event = (struct inotify_event *) &buffer[ifile];
         printf("Event: %s\n", event->name);
         printf("Event len: %d\n", event->len);
+        printf("Event type: %d\n", event->mask);
+        printf("Event IN_CLOSE_WRITE: %d\n", IN_CLOSE_WRITE);
+        printf("Event IN_MODIFY: %d\n", IN_MODIFY);
         // if (event->len && event->mask & IN_CLOSE_WRITE && strcmp(event->name, "pacdrive.json") == 0) {
         if (event->len && event->mask & IN_MODIFY && strcmp(event->name, "pacdrive.json") == 0) {
-          sleep(2);
+          sleep(5);
           loadGameConfig();
         }
         ifile += EVENT_SIZE + event->len;
