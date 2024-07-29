@@ -230,10 +230,12 @@ loadGameConfig()
             oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             // oledPower(&ssoled[0], 0);
+            printf("P1_BUTTON1 not found 1\n");
             buttonAinitated = -1;
           }
         } else {
           // oledPower(&ssoled[0], 0);
+          printf("P1_BUTTON1 not found 2\n");
           buttonAinitated = -1;
         }
         if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
@@ -241,10 +243,12 @@ loadGameConfig()
             oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             // oledPower(&ssoled[1], 0);
+            printf("P1_BUTTON2 not found 1\n");
             buttonBinitated = -1;
           }
         } else {
           // oledPower(&ssoled[1], 0);
+          printf("P1_BUTTON2 not found 2\n");
           buttonBinitated = -1;
         }
         // printf("Press ENTER to quit\n");
