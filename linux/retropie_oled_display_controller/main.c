@@ -256,7 +256,8 @@ loadGameConfig()
 int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
   int bFlip = 0, bInvert = 0, bWire = 1;
   // int i;
-  if (*buttonInitated != OLED_NOT_FOUND) {
+  
+  if (*buttonInitated == -1) {
     // oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
     *buttonInitated = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
     if (*buttonInitated != OLED_NOT_FOUND) {
