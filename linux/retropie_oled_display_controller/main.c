@@ -22,6 +22,10 @@
 time_t rawtime;
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
+// SSOLED buttonAoled;
+int buttonAinitated = -1;
+// SSOLED buttonBoled;
+int buttonBinitated = -1;
 unsigned char ucBackBuf[1024];
 
 typedef struct args
@@ -249,13 +253,13 @@ loadGameConfig()
 }
 
 // create method to initDisplay params iOLEDAddr, iOLEDType, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin
-int initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
+int initDisplay(int buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
   int bFlip = 0, bInvert = 0, bWire = 1;
-  int i;
-  if (ssoled[iOLEDidx].oled_x == NULL) {
+  // int i;
+  if (buttonInitated != -1) {
     // oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
-    i = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
-    if (i != OLED_NOT_FOUND) {
+    buttonInitated = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
+    if (buttonInitated != OLED_NOT_FOUND) {
       printf("Successfully opened I2C bus %d on address %d on SLC pin %d on SDA pin %d\n", iOLEDChannel, iOLEDAddr, SLCpin, SDApin);
       oledSetBackBuffer(&ssoled[iOLEDidx], ucBackBuf);
       resetDisplays();
@@ -282,10 +286,10 @@ initDisplays()
   int iOLED_SDApin = 8;
   // A
   int buttonAidx = 0;
-  int buttonA_created = initDisplay(buttonAidx, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  int buttonA_created = initDisplay(&buttonAinitated, buttonAidx, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
   // B
   int buttonBidx = 1;
-  int buttonB_created = initDisplay(buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  int buttonB_created = initDisplay(&buttonBinitated,  buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
 
   if (buttonA_created == 0 && buttonB_created == 0) {
     printf("Displays created successfully\n");
