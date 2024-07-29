@@ -212,6 +212,8 @@ loadGameConfig()
       printf ("Game Found - %s\n", json_object_get_string(tmp));
       const char* gameFound = json_object_get_string(tmp);
       
+      initDisplays();
+      
       if (strcmp(gameFound, "alloff") == 0) {
         printf ("Game Found - All Off Reset Displays\n");
         resetDisplays();
