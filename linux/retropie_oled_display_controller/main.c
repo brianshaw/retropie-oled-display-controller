@@ -31,6 +31,7 @@ typedef struct args
 } args;
 
 int loadGameConfig();
+int initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
 int initDisplays();
 int turnOffDisplays();
 void watchDisplayUpdate();
@@ -245,8 +246,52 @@ loadGameConfig()
   return 0;
 }
 
+// create method to initDisplay params iOLEDAddr, iOLEDType, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin
+int initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
+  int bFlip = 0, bInvert = 0, bWire = 1;
+  int i;
+  if (&ssoled[iOLEDidx] == NULL) {
+    i = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, iOLEDChannel, SLCpin, SDApin, 0);
+    if (i != OLED_NOT_FOUND) {
+      printf("Successfully opened I2C bus %d on address %d on channel %d on SLC pin %d on SDA pin %d\n", iOLEDAddr, iOLEDChannel, SLCpin, SDApin);
+      oledSetBackBuffer(&ssoled[iOLEDidx], ucBackBuf);
+      resetDisplays();
+    } else {
+      printf("Unable to initialize I2C bus %d on address %d, please check your connections and verify the device address by typing 'i2cdetect -y %d'\n", iOLEDChannel, iOLEDAddr, iOLEDChannel);
+      return -1;
+    }
+  }
+  return 0;
+}
 int
 initDisplays()
+{
+  int iOLEDAddr1 = 0x3c; // typical address; it can also be 0x3d
+  int iOLEDAddr2 = 0x3d;
+  int iOLEDType = OLED_128x64;
+  // Y X L
+  // B A R
+  // initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin)
+  int iOLED_AB_Channel = 4;
+  int iOLED_SLCpin = 9;
+  int iOLED_SDApin = 8;
+  // A
+  int buttonAidx = 0;
+  int buttonA_created = initDisplay(buttonAidx, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  // B
+  int buttonBidx = 1;
+  int buttonBidx = initDisplay(buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+
+  if (buttonA_created == 0 && buttonB_created == 0) {
+    printf("Displays created successfully\n");
+    resetDisplays();
+  } else {
+    printf("Displays not created successfully\n");
+  }
+}
+
+int
+initDisplaysOldWorking()
 {
   int i;
   // int iOLEDAddr = -1; // typical address; it can also be 0x3d
