@@ -35,7 +35,7 @@ typedef struct args
 } args;
 
 int loadGameConfig();
-int initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
+int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
 int initDisplays();
 int turnOffDisplays();
 void watchDisplayUpdate();
