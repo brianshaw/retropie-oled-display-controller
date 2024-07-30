@@ -22,11 +22,15 @@
 time_t rawtime;
 
 SSOLED ssoled[2]; // data structure for 2 OLED objects
-// SSOLED buttonAoled;
-int buttonAinitated = -1;
-// SSOLED buttonBoled;
-int buttonBinitated = -1;
 unsigned char ucBackBuf[1024];
+// A
+int buttonAidx = 0;
+SSOLED buttonAoled;
+int buttonAinitated = -1;
+// B
+int buttonBidx = 1;
+SSOLED buttonBoled;
+int buttonBinitated = -1;
 
 typedef struct args
 {
@@ -36,7 +40,8 @@ typedef struct args
 
 int loadGameConfig();
 int loadGameConfigCalledTimeStamp = 0;
-int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
+// int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
+int initDisplay(int *buttonInitated, SSOLED *buttonOled, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin);
 int initDisplays();
 int turnOffDisplays();
 void watchDisplayUpdate();
@@ -242,29 +247,31 @@ loadGameConfig()
         // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
         if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
           if (json_object_get_string(tmp)) {
-            oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+            oledWriteString(&buttonAoled, 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+            // oledWriteString(&ssoled[0], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             // oledPower(&ssoled[0], 0);
             printf("P1_BUTTON1 not found 1\n");
-            buttonAinitated = -1;
+            // buttonAinitated = -1;
           }
         } else {
           // oledPower(&ssoled[0], 0);
           printf("P1_BUTTON1 not found 2\n");
-          buttonAinitated = -1;
+          // buttonAinitated = -1;
         }
         if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
           if (json_object_get_string(tmp)) {
-            oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+            oledWriteString(&buttonBoled, 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+            // oledWriteString(&ssoled[1], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             // oledPower(&ssoled[1], 0);
             printf("P1_BUTTON2 not found 1\n");
-            buttonBinitated = -1;
+            // buttonBinitated = -1;
           }
         } else {
           // oledPower(&ssoled[1], 0);
           printf("P1_BUTTON2 not found 2\n");
-          buttonBinitated = -1;
+          // buttonBinitated = -1;
         }
         // printf("Press ENTER to quit\n");
         // getchar();
@@ -284,16 +291,19 @@ loadGameConfig()
 }
 
 // create method to initDisplay params iOLEDAddr, iOLEDType, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin
-int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
+// int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
+int initDisplay(int *buttonInitated, SSOLED *buttonOled, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
   int bFlip = 0, bInvert = 0, bWire = 1;
   // int i;
   
   if (*buttonInitated == -1) {
     // oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
-    *buttonInitated = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
+    // *buttonInitated = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
+    *buttonInitated = oledInit(&buttonOled, iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
     if (*buttonInitated != OLED_NOT_FOUND) {
       printf("Successfully opened I2C bus %d on address %d on SLC pin %d on SDA pin %d\n", iOLEDChannel, iOLEDAddr, SLCpin, SDApin);
-      oledSetBackBuffer(&ssoled[iOLEDidx], ucBackBuf);
+      oledSetBackBuffer(&buttonOled, ucBackBuf);
+      // oledSetBackBuffer(&ssoled[iOLEDidx], ucBackBuf);
       resetDisplays();
     } else {
       printf("Unable to initialize I2C bus %d on address %d, please check your connections and verify the device address by typing 'i2cdetect -y %d'\n", iOLEDChannel, iOLEDAddr, iOLEDChannel);
@@ -304,6 +314,7 @@ int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType,
   }
   return 0;
 }
+
 int
 initDisplays()
 {
@@ -317,11 +328,11 @@ initDisplays()
   int iOLED_SLCpin = 9;
   int iOLED_SDApin = 8;
   // A
-  int buttonAidx = 0;
-  int buttonA_created = initDisplay(&buttonAinitated, buttonAidx, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  int buttonA_created = initDisplay(&buttonAinitated, &buttonAoled, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  // int buttonA_created = initDisplay(&buttonAinitated, buttonAidx, iOLEDAddr1, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
   // B
-  int buttonBidx = 1;
-  int buttonB_created = initDisplay(&buttonBinitated,  buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  int buttonB_created = initDisplay(&buttonBinitated, &buttonBoled, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
+  // int buttonB_created = initDisplay(&buttonBinitated,  buttonBidx, iOLEDAddr2, iOLEDType, iOLED_AB_Channel, iOLED_SLCpin, iOLED_SDApin);
 
   if (buttonA_created == 0 && buttonB_created == 0) {
     printf("Displays created successfully\n");
@@ -389,12 +400,14 @@ initDisplaysOldWorking()
 void
 resetDisplays()
 {
-  oledFill(&ssoled[0], 0,1); // fill with black
-  oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
+  // oledFill(&ssoled[0], 0,1); // fill with black
+  // oledWriteString(&ssoled[0], 0,0,1,"SS_OLED 1",FONT_NORMAL,0,1);
+  oledFill(&buttonAoled, 0,1); // fill with black
+  oledWriteString(&buttonAoled, 0,0,1,"SS_OLED A",FONT_NORMAL,0,1);
   buttonAinitated = -1;
 
-  oledFill(&ssoled[1], 0, 1); // fill with black
-  oledWriteString(&ssoled[1], 0,0,1,"SS_OLED 2",FONT_NORMAL,0,1);
+  oledFill(&buttonBoled, 0, 1); // fill with black
+  oledWriteString(&buttonBoled, 0,0,1,"SS_OLED B",FONT_NORMAL,0,1);
   buttonBinitated = -1;
 }
 
@@ -404,8 +417,10 @@ turnOffDisplays()
   // if (!ssoled[0]) {
   //   initDisplays();
   // }
-  oledPower(&ssoled[0], 0); // turn off both displays
-  oledPower(&ssoled[1], 0);
+  // oledPower(&ssoled[0], 0); // turn off both displays
+  // oledPower(&ssoled[1], 0);
+  oledPower(&buttonAoled, 0); // turn off both displays
+  oledPower(&buttonBoled, 0);
   return 0;
 }
 
