@@ -299,10 +299,10 @@ int initDisplay(int *buttonInitated, SSOLED *buttonOled, int iOLEDAddr, int iOLE
   if (*buttonInitated == -1) {
     // oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
     // *buttonInitated = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
-    *buttonInitated = oledInit(&buttonOled, iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
+    *buttonInitated = oledInit(*buttonOled, iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
     if (*buttonInitated != OLED_NOT_FOUND) {
       printf("Successfully opened I2C bus %d on address %d on SLC pin %d on SDA pin %d\n", iOLEDChannel, iOLEDAddr, SLCpin, SDApin);
-      oledSetBackBuffer(&buttonOled, ucBackBuf);
+      oledSetBackBuffer(*buttonOled, ucBackBuf);
       // oledSetBackBuffer(&ssoled[iOLEDidx], ucBackBuf);
       resetDisplays();
     } else {
