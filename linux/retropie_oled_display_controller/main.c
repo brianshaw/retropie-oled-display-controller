@@ -246,27 +246,29 @@ loadGameConfig()
         // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
         if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
           if (json_object_get_string(tmp)) {
+            oledPower(&ssoled[buttonB_idx], 1);
             oledWriteString(&ssoled[buttonB_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
-            // oledPower(&ssoled[0], 0);
+            oledPower(&ssoled[buttonB_idx], 0);
             printf("P1_BUTTON1 not found 1\n");
             // buttonAinitated = -1;
           }
         } else {
-          // oledPower(&ssoled[0], 0);
+          oledPower(&ssoled[buttonB_idx], 0);
           printf("P1_BUTTON1 not found 2\n");
           // buttonAinitated = -1;
         }
         if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
           if (json_object_get_string(tmp)) {
+            oledPower(&ssoled[buttonA_idx], 1);
             oledWriteString(&ssoled[buttonA_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
-            // oledPower(&ssoled[1], 0);
+            oledPower(&ssoled[buttonA_idx], 0);
             printf("P1_BUTTON2 not found 1\n");
             // buttonBinitated = -1;
           }
         } else {
-          // oledPower(&ssoled[1], 0);
+          oledPower(&ssoled[buttonA_idx], 0);
           printf("P1_BUTTON2 not found 2\n");
           // buttonBinitated = -1;
         }
@@ -328,7 +330,7 @@ initDisplays()
 
   if (buttonA_created == 0 && buttonB_created == 0) {
     printf("Displays created successfully\n");
-    resetDisplays();
+    // resetDisplays();
   } else {
     printf("Displays not created successfully\n");
   }
@@ -394,11 +396,11 @@ resetDisplays()
 {
   oledFill(&ssoled[buttonA_idx], 0,1); // fill with black
   oledWriteString(&ssoled[buttonA_idx], 0,0,1,"SS_OLED A",FONT_NORMAL,0,1);
-  buttonAinitated = -1;
+  // buttonAinitated = -1;
 
   oledFill(&ssoled[buttonB_idx], 0, 1); // fill with black
   oledWriteString(&ssoled[buttonB_idx], 0,0,1,"SS_OLED B",FONT_NORMAL,0,1);
-  buttonBinitated = -1;
+  // buttonBinitated = -1;
 }
 
 int
