@@ -236,7 +236,7 @@ loadGameConfig()
       const char* gameFound = json_object_get_string(tmp);
       // sleep(2);
       initDisplays(); // wasn't here before just testing if i need to turn on displays again
-      
+      resetDisplays();
       if (strcmp(gameFound, "alloff") == 0) {
         printf ("Game Found - All Off Reset Displays\n");
         resetDisplays();
