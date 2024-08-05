@@ -396,7 +396,7 @@ initDisplays()
   int iOLED_YB_SLCpin = 4;
   int iOLED_YB_SDApin = 5;
   // Y
-  int buttonY_created = initDisplay(&buttonAinitated, buttonY_idx, iOLEDAddrD, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
+  int buttonY_created = initDisplay(&buttonYinitated, buttonY_idx, iOLEDAddrD, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
   // B
   int buttonB_created = initDisplay(&buttonBinitated, buttonB_idx, iOLEDAddrC, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
   
@@ -404,9 +404,9 @@ initDisplays()
   int iOLED_XA_SLCpin = 9;
   int iOLED_XA_SDApin = 8;
   // X
-  int buttonX_created = initDisplay(&buttonAinitated, buttonX_idx, iOLEDAddrD, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
+  int buttonX_created = initDisplay(&buttonXinitated, buttonX_idx, iOLEDAddrD, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
   // A
-  int buttonA_created = initDisplay(&buttonBinitated, buttonA_idx, iOLEDAddrC, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
+  int buttonA_created = initDisplay(&buttonAinitated, buttonA_idx, iOLEDAddrC, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
 
   if (buttonY_created == 0 && buttonB_created == 0 && buttonX_created == 0 && buttonA_created == 0) {
     printf("Displays created successfully\n");
