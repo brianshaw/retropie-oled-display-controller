@@ -224,6 +224,7 @@ ulValidateConfigFileStr (const char* file)
 int
 loadGameConfig()
 {
+  printf("loadGameConfig called\n");
   if (loadGameConfigCalledTimeStamp == 0) {
     loadGameConfigCalledTimeStamp = time(&rawtime);
   }
