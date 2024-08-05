@@ -393,8 +393,8 @@ initDisplays()
   // B A R
   // initDisplay(int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin)
   int iOLED_YB_Channel = 3;
-  int iOLED_YB_SLCpin = 5;
   int iOLED_YB_SDApin = 4;
+  int iOLED_YB_SLCpin = 5;
   // Y
   int buttonY_created = initDisplay(&buttonYinitated, buttonY_idx, iOLEDAddrD, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
   sleep(0.25);
@@ -403,8 +403,8 @@ initDisplays()
   sleep(0.25);
 
   int iOLED_XA_Channel = 4;
-  int iOLED_XA_SLCpin = 9;
   int iOLED_XA_SDApin = 8;
+  int iOLED_XA_SLCpin = 9;
   // X
   int buttonX_created = initDisplay(&buttonXinitated, buttonX_idx, iOLEDAddrD, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
   sleep(0.25);
