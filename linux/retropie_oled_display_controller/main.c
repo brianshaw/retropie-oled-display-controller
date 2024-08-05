@@ -21,7 +21,7 @@
 #include <time.h>
 time_t rawtime;
 
-SSOLED ssoled[2]; // data structure for 2 OLED objects
+SSOLED ssoled[4]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
 // A
 int buttonA_idx = 0;
@@ -364,7 +364,7 @@ initDisplays()
   int iOLED_YB_Channel = 3;
   int iOLED_YB_SLCpin = 4;
   int iOLED_YB_SDApin = 5;
-  // A
+  // Y
   int buttonY_created = initDisplay(&buttonAinitated, buttonY_idx, iOLEDAddr1, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
   // B
   int buttonB_created = initDisplay(&buttonBinitated, buttonB_idx, iOLEDAddr2, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
@@ -372,9 +372,9 @@ initDisplays()
   int iOLED_XA_Channel = 4;
   int iOLED_XA_SLCpin = 9;
   int iOLED_XA_SDApin = 8;
-  // A
+  // X
   int buttonX_created = initDisplay(&buttonAinitated, buttonX_idx, iOLEDAddr1, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
-  // B
+  // A
   int buttonA_created = initDisplay(&buttonBinitated, buttonA_idx, iOLEDAddr2, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
 
   if (buttonY_created == 0 && buttonB_created == 0 && buttonX_created == 0 && buttonA_created == 0) {
