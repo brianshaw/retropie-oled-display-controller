@@ -227,17 +227,18 @@ loadGameConfig()
   printf("loadGameConfig called\n");
   if (loadGameConfigCalledTimeStamp == 0) {
     loadGameConfigCalledTimeStamp = time(&rawtime);
-  } else {
+  } // else {
     time_t currentTime;
     currentTime = time(&rawtime);
     printf("time since last call: %f\n", difftime(currentTime, loadGameConfigCalledTimeStamp));
-    if (difftime(currentTime, loadGameConfigCalledTimeStamp) < 3) {
+    
+    if (currentTime != loadGameConfigCalledTimeStamp && difftime(currentTime, loadGameConfigCalledTimeStamp) < 3) {
       printf("loadGameConfig called too soon\n");
       return 0;
     } else {
       loadGameConfigCalledTimeStamp = 0;
     }
-  }
+  //}
   printf ("Loading %s...\n", pathToPacDriveJsonGameConfig);
   gameJsonFound = ulValidateConfigFileStr (pathToPacDriveJsonGameConfig);
   if (gameJsonFound == 0)
