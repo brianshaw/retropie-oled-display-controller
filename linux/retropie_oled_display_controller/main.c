@@ -366,7 +366,7 @@ int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType,
   // int i;
   
   if (*buttonInitated == -1) {
-    // oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
+    // oledInit(&ssoled[0], iOLEDType0, iOLEDAddrC, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
     *buttonInitated = oledInit(&ssoled[iOLEDidx], iOLEDType, iOLEDAddr, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin, 0);
     if (*buttonInitated != OLED_NOT_FOUND) {
       printf("Successfully opened I2C bus %d on address %d on SLC pin %d on SDA pin %d\n", iOLEDChannel, iOLEDAddr, SLCpin, SDApin);
@@ -385,8 +385,8 @@ int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType,
 int
 initDisplays()
 {
-  int iOLEDAddr1 = 0x3c; // typical address; it can also be 0x3d
-  int iOLEDAddr2 = 0x3d;
+  int iOLEDAddrC = 0x3c; // typical address; it can also be 0x3d
+  int iOLEDAddrD = 0x3d;
   int iOLEDType = OLED_128x64;
   // Y X L
   // B A R
@@ -395,17 +395,17 @@ initDisplays()
   int iOLED_YB_SLCpin = 4;
   int iOLED_YB_SDApin = 5;
   // Y
-  int buttonY_created = initDisplay(&buttonAinitated, buttonY_idx, iOLEDAddr1, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
+  int buttonY_created = initDisplay(&buttonAinitated, buttonY_idx, iOLEDAddrD, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
   // B
-  int buttonB_created = initDisplay(&buttonBinitated, buttonB_idx, iOLEDAddr2, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
+  int buttonB_created = initDisplay(&buttonBinitated, buttonB_idx, iOLEDAddrC, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
   
   int iOLED_XA_Channel = 4;
   int iOLED_XA_SLCpin = 9;
   int iOLED_XA_SDApin = 8;
   // X
-  int buttonX_created = initDisplay(&buttonAinitated, buttonX_idx, iOLEDAddr1, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
+  int buttonX_created = initDisplay(&buttonAinitated, buttonX_idx, iOLEDAddrD, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
   // A
-  int buttonA_created = initDisplay(&buttonBinitated, buttonA_idx, iOLEDAddr2, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
+  int buttonA_created = initDisplay(&buttonBinitated, buttonA_idx, iOLEDAddrC, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
 
   if (buttonY_created == 0 && buttonB_created == 0 && buttonX_created == 0 && buttonA_created == 0) {
     printf("Displays created successfully\n");
@@ -421,15 +421,15 @@ initDisplaysOldWorking()
 {
   int i;
   // int iOLEDAddr = -1; // typical address; it can also be 0x3d
-  int iOLEDAddr1 = 0x3c; // typical address; it can also be 0x3d
-  int iOLEDAddr2 = 0x3d; // typical address; it can also be 0x3d
+  int iOLEDAddrC = 0x3c; // typical address; it can also be 0x3d
+  int iOLEDAddrD = 0x3d; // typical address; it can also be 0x3d
   int iOLEDType0 = OLED_128x64; // Change this for your specific display
   // int iOLEDType1 = OLED_64x32;
   int bFlip = 0, bInvert = 0, bWire = 1;
 
   // For hardware I2C on the RPI, the clock rate is fixed and set in the
   // /boot/config.txt file, so we pass 0 for the bus speed
-	i=oledInit(&ssoled[0], iOLEDType0, iOLEDAddr1, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
+	i=oledInit(&ssoled[0], iOLEDType0, iOLEDAddrC, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
 	if (i != OLED_NOT_FOUND)
 	{
     printf("Successfully opened I2C bus 4\n");
@@ -447,7 +447,7 @@ initDisplaysOldWorking()
     // }
 
 
-    oledInit(&ssoled[1], iOLEDType0, iOLEDAddr2, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
+    oledInit(&ssoled[1], iOLEDType0, iOLEDAddrD, bFlip, bInvert, bWire, 4, 9, 8, 0); // initialize 128x64 oled on I2C channel 1
     oledSetBackBuffer(&ssoled[1], ucBackBuf);
     // oledFill(&ssoled[1], 0, 1); // fill with black
     // oledWriteString(&ssoled[0], 0,0,0, msgs[i], FONT_NORMAL,0,1);
