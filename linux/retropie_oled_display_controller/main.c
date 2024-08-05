@@ -21,27 +21,31 @@
 #include <time.h>
 time_t rawtime;
 
-SSOLED ssoled[4]; // data structure for 2 OLED objects
+SSOLED ssoled[6]; // data structure for 2 OLED objects
 unsigned char ucBackBuf[1024];
 // A
 int buttonA_idx = 0;
-// SSOLED buttonAoled;
 int buttonAinitated = -1;
 
 // B
 int buttonB_idx = 1;
-// SSOLED buttonBoled;
 int buttonBinitated = -1;
 
 // Y
 int buttonY_idx = 2;
-// SSOLED buttonAoled;
 int buttonYinitated = -1;
 
 // X
 int buttonX_idx = 3;
-// SSOLED buttonBoled;
 int buttonXinitated = -1;
+
+// L
+int buttonL_idx = 4;
+int buttonLinitated = -1;
+
+// R
+int buttonR_idx = 5;
+int buttonRinitated = -1;
 
 typedef struct args
 {
@@ -285,20 +289,20 @@ loadGameConfig()
           // buttonBinitated = -1;
         }
 
-        // if (json_object_object_get_ex(bcfg, "P1_BUTTON3", &tmp)) {
-        //   if (json_object_get_string(tmp)) {
-        //     oledPower(&ssoled[buttonY_idx], 1);
-        //     oledWriteString(&ssoled[buttonY_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
-        //   } else {
-        //     oledPower(&ssoled[buttonY_idx], 0);
-        //     printf("P1_BUTTON3 not empty 1\n");
-        //     // buttonBinitated = -1;
-        //   }
-        // } else {
-        //   oledPower(&ssoled[buttonY_idx], 0);
-        //   printf("P1_BUTTON3 not found 2\n");
-        //   // buttonBinitated = -1;
-        // }
+        if (json_object_object_get_ex(bcfg, "P1_BUTTON3", &tmp)) {
+          if (json_object_get_string(tmp)) {
+            oledPower(&ssoled[buttonY_idx], 1);
+            oledWriteString(&ssoled[buttonY_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+          } else {
+            oledPower(&ssoled[buttonY_idx], 0);
+            printf("P1_BUTTON3 not empty 1\n");
+            // buttonBinitated = -1;
+          }
+        } else {
+          oledPower(&ssoled[buttonY_idx], 0);
+          printf("P1_BUTTON3 not found 2\n");
+          // buttonBinitated = -1;
+        }
 
         if (json_object_object_get_ex(bcfg, "P1_BUTTON4", &tmp)) {
           if (json_object_get_string(tmp)) {
@@ -330,20 +334,21 @@ loadGameConfig()
           // buttonBinitated = -1;
         }
 
-        // if (json_object_object_get_ex(bcfg, "P1_BUTTON6", &tmp)) {
-        //   if (json_object_get_string(tmp)) {
-        //     oledPower(&ssoled[buttonR_idx], 1);
-        //     oledWriteString(&ssoled[buttonR_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
-        //   } else {
-        //     oledPower(&ssoled[buttonR_idx], 0);
-        //     printf("P1_BUTTON6 not empty 1\n");
-        //     // buttonBinitated = -1;
-        //   }
-        // } else {
-        //   oledPower(&ssoled[buttonR_idx], 0);
-        //   printf("P1_BUTTON6 not found 2\n");
-        //   // buttonBinitated = -1;
-        // }
+        if (json_object_object_get_ex(bcfg, "P1_BUTTON6", &tmp)) {
+          if (json_object_get_string(tmp)) {
+            oledPower(&ssoled[buttonR_idx], 1);
+            oledWriteString(&ssoled[buttonR_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+          } else {
+            oledPower(&ssoled[buttonR_idx], 0);
+            printf("P1_BUTTON6 not empty 1\n");
+            // buttonBinitated = -1;
+          }
+        } else {
+          oledPower(&ssoled[buttonR_idx], 0);
+          printf("P1_BUTTON6 not found 2\n");
+          // buttonBinitated = -1;
+        }
+
         // printf("Press ENTER to quit\n");
         // getchar();
         // turnOffDisplays();
@@ -398,20 +403,30 @@ initDisplays()
   int iOLED_YB_SLCpin = 5;
   // Y
   int buttonY_created = initDisplay(&buttonYinitated, buttonY_idx, iOLEDAddrD, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
-  sleep(0.25);
+  // sleep(0.25);
   // B
   int buttonB_created = initDisplay(&buttonBinitated, buttonB_idx, iOLEDAddrC, iOLEDType, iOLED_YB_Channel, iOLED_YB_SLCpin, iOLED_YB_SDApin);
-  sleep(0.25);
+  // sleep(0.25);
 
   int iOLED_XA_Channel = 4;
   int iOLED_XA_SDApin = 8;
   int iOLED_XA_SLCpin = 9;
   // X
   int buttonX_created = initDisplay(&buttonXinitated, buttonX_idx, iOLEDAddrD, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
-  sleep(0.25);
+  // sleep(0.25);
   // A
   int buttonA_created = initDisplay(&buttonAinitated, buttonA_idx, iOLEDAddrC, iOLEDType, iOLED_XA_Channel, iOLED_XA_SLCpin, iOLED_XA_SDApin);
-  sleep(0.25);
+  // sleep(0.25);
+  
+  int iOLED_LR_Channel = 5;
+  int iOLED_LR_SDApin = 12;
+  int iOLED_LR_SLCpin = 13;
+  // L
+  int buttonL_created = initDisplay(&buttonLinitated, buttonL_idx, iOLEDAddrD, iOLEDType, iOLED_LR_Channel, iOLED_LR_SLCpin, iOLED_LR_SDApin);
+  // sleep(0.25);
+  // R
+  int buttonR_created = initDisplay(&buttonRinitated, buttonR_idx, iOLEDAddrC, iOLEDType, iOLED_LR_Channel, iOLED_LR_SLCpin, iOLED_LR_SDApin);
+  // sleep(0.25);
 
   if (buttonY_created == 0 && buttonB_created == 0 && buttonX_created == 0 && buttonA_created == 0) {
     printf("Displays created successfully\n");
@@ -489,11 +504,19 @@ resetDisplays()
 
   oledFill(&ssoled[buttonY_idx], 0,1); // fill with black
   oledWriteString(&ssoled[buttonY_idx], 0,0,1,"SS_OLED Y",FONT_NORMAL,0,1);
-  // buttonAinitated = -1;
+  // buttonYinitated = -1;
 
   oledFill(&ssoled[buttonX_idx], 0, 1); // fill with black
   oledWriteString(&ssoled[buttonX_idx], 0,0,1,"SS_OLED X",FONT_NORMAL,0,1);
-  // buttonBinitated = -1;
+  // buttonXinitated = -1;
+
+  oledFill(&ssoled[buttonL_idx], 0,1); // fill with black
+  oledWriteString(&ssoled[buttonL_idx], 0,0,1,"SS_OLED L",FONT_NORMAL,0,1);
+  // buttonLinitated = -1;
+
+  oledFill(&ssoled[buttonR_idx], 0, 1); // fill with black
+  oledWriteString(&ssoled[buttonR_idx], 0,0,1,"SS_OLED R",FONT_NORMAL,0,1);
+  // buttonRinitated = -1;
 }
 
 int
@@ -506,6 +529,8 @@ turnOffDisplays()
   oledPower(&ssoled[buttonB_idx], 0);
   oledPower(&ssoled[buttonY_idx], 0);
   oledPower(&ssoled[buttonX_idx], 0);
+  oledPower(&ssoled[buttonL_idx], 0);
+  oledPower(&ssoled[buttonR_idx], 0);
   return 0;
 }
 
