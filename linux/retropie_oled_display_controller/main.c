@@ -362,6 +362,7 @@ loadGameConfig()
 
 // create method to initDisplay params iOLEDAddr, iOLEDType, bFlip, bInvert, bWire, iOLEDChannel, SLCpin, SDApin
 int initDisplay(int *buttonInitated, int iOLEDidx, int iOLEDAddr, int iOLEDType, int iOLEDChannel, int SLCpin, int SDApin) {
+  printf("initDisplay called buttonInitated: %d, iOLEDidx: %d, iOLEDAddr: %d, iOLEDType: %d, iOLEDChannel: %d, SLCpin: %d, SDApin: %d\n", *buttonInitated, iOLEDidx, iOLEDAddr, iOLEDType, iOLEDChannel, SLCpin, SDApin);
   int bFlip = 0, bInvert = 0, bWire = 1;
   // int i;
   
