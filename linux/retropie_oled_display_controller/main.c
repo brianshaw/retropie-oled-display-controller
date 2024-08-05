@@ -262,7 +262,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonB_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonB_idx], 0);
-            printf("P1_BUTTON1 not found 1\n");
+            printf("P1_BUTTON1 not empty 1\n");
             // buttonAinitated = -1;
           }
         } else {
@@ -276,7 +276,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonA_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonA_idx], 0);
-            printf("P1_BUTTON2 not found 1\n");
+            printf("P1_BUTTON2 not empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -291,7 +291,7 @@ loadGameConfig()
         //     oledWriteString(&ssoled[buttonY_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
         //   } else {
         //     oledPower(&ssoled[buttonY_idx], 0);
-        //     printf("P1_BUTTON3 not found 1\n");
+        //     printf("P1_BUTTON3 not empty 1\n");
         //     // buttonBinitated = -1;
         //   }
         // } else {
@@ -306,7 +306,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonY_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonY_idx], 0);
-            printf("P1_BUTTON4 not found 1\n");
+            printf("P1_BUTTON4 not empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -321,7 +321,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonX_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonX_idx], 0);
-            printf("P1_BUTTON5 not found 1\n");
+            printf("P1_BUTTON5 not empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -336,7 +336,7 @@ loadGameConfig()
         //     oledWriteString(&ssoled[buttonR_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
         //   } else {
         //     oledPower(&ssoled[buttonR_idx], 0);
-        //     printf("P1_BUTTON6 not found 1\n");
+        //     printf("P1_BUTTON6 not empty 1\n");
         //     // buttonBinitated = -1;
         //   }
         // } else {
