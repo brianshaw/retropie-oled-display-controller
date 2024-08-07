@@ -237,7 +237,7 @@ loadGameConfig()
     timeDifference = difftime(currentTime, loadGameConfigCalledTimeStamp);
     printf("time since last call: %f\n", timeDifference);
     
-    if (timeDifference != 0.000000e && timeDifference < 3) {
+    if (timeDifference != 0.000000 && timeDifference < 3) {
       printf("loadGameConfig called too soon\n");
       return 0;
     } else {
