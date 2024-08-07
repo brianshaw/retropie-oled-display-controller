@@ -234,9 +234,10 @@ loadGameConfig()
   } // else {
     time_t currentTime;
     currentTime = time(&rawtime);
-    printf("time since last call: %f\n", difftime(currentTime, loadGameConfigCalledTimeStamp));
+    timeDifference = difftime(currentTime, loadGameConfigCalledTimeStamp);
+    printf("time since last call: %f\n", timeDifference);
     
-    if (currentTime != loadGameConfigCalledTimeStamp && difftime(currentTime, loadGameConfigCalledTimeStamp) < 3) {
+    if (timeDifference != 0.000000e && timeDifference < 3) {
       printf("loadGameConfig called too soon\n");
       return 0;
     } else {
@@ -266,7 +267,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonB_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonB_idx], 0);
-            printf("P1_BUTTON1 not empty 1\n");
+            printf("P1_BUTTON1 empty 1\n");
             // buttonAinitated = -1;
           }
         } else {
@@ -280,7 +281,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonA_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonA_idx], 0);
-            printf("P1_BUTTON2 not empty 1\n");
+            printf("P1_BUTTON2 empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -295,7 +296,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonL_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonL_idx], 0);
-            printf("P1_BUTTON3 not empty 1\n");
+            printf("P1_BUTTON3 empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -310,7 +311,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonY_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonY_idx], 0);
-            printf("P1_BUTTON4 not empty 1\n");
+            printf("P1_BUTTON4 empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -325,7 +326,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonX_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonX_idx], 0);
-            printf("P1_BUTTON5 not empty 1\n");
+            printf("P1_BUTTON5 empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
@@ -340,7 +341,7 @@ loadGameConfig()
             oledWriteString(&ssoled[buttonR_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
             oledPower(&ssoled[buttonR_idx], 0);
-            printf("P1_BUTTON6 not empty 1\n");
+            printf("P1_BUTTON6 empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
