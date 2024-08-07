@@ -234,7 +234,7 @@ loadGameConfig()
   } // else {
     time_t currentTime;
     currentTime = time(&rawtime);
-    timeDifference = difftime(currentTime, loadGameConfigCalledTimeStamp);
+    double timeDifference = difftime(currentTime, loadGameConfigCalledTimeStamp);
     printf("time since last call: %f\n", timeDifference);
     
     if (timeDifference != 0.000000 && timeDifference < 3) {
