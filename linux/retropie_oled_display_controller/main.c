@@ -236,7 +236,7 @@ loadGameConfig()
     currentTime = time(&rawtime);
     double timeDifference = difftime(currentTime, loadGameConfigCalledTimeStamp);
     printf("time since last call: %f\n", timeDifference);
-    printf("time compare 0 timeDifference != 0.000000: %d\n", timeDifference != 0.000000);
+    // printf("time compare 0 timeDifference == 0: %d\n", timeDifference == 0.000000);
     if (timeDifference == 0 || timeDifference < 3) {
       printf("loadGameConfig called too soon\n");
       return 0;
@@ -263,29 +263,29 @@ loadGameConfig()
         // oledWriteString(&ssoled[1], 0, 0, 6, "something here", FONT_SMALL,0,1);
         if (json_object_object_get_ex(bcfg, "P1_BUTTON1", &tmp)) {
           if (json_object_get_string(tmp)) {
-            oledPower(&ssoled[buttonB_idx], 1);
-            oledWriteString(&ssoled[buttonB_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+            oledPower(&ssoled[buttonA_idx], 1);
+            oledWriteString(&ssoled[buttonA_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
-            oledPower(&ssoled[buttonB_idx], 0);
+            oledPower(&ssoled[buttonA_idx], 0);
             printf("P1_BUTTON1 empty 1\n");
             // buttonAinitated = -1;
           }
         } else {
-          oledPower(&ssoled[buttonB_idx], 0);
+          oledPower(&ssoled[buttonA_idx], 0);
           printf("P1_BUTTON1 not found 2\n");
           // buttonAinitated = -1;
         }
         if (json_object_object_get_ex(bcfg, "P1_BUTTON2", &tmp)) {
           if (json_object_get_string(tmp)) {
-            oledPower(&ssoled[buttonA_idx], 1);
-            oledWriteString(&ssoled[buttonA_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
+            oledPower(&ssoled[buttonB_idx], 1);
+            oledWriteString(&ssoled[buttonB_idx], 0,0,5, (char*)json_object_get_string(tmp), FONT_SMALL,0,1);
           } else {
-            oledPower(&ssoled[buttonA_idx], 0);
+            oledPower(&ssoled[buttonB_idx], 0);
             printf("P1_BUTTON2 empty 1\n");
             // buttonBinitated = -1;
           }
         } else {
-          oledPower(&ssoled[buttonA_idx], 0);
+          oledPower(&ssoled[buttonB_idx], 0);
           printf("P1_BUTTON2 not found 2\n");
           // buttonBinitated = -1;
         }
